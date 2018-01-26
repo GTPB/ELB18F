@@ -2,12 +2,11 @@
 # ELB17S
 
 ## Learning Objectives: High Throughput Sequencing (HTS)
-
-### Broadly describe the High Throughput Sequencing Workflow
-### Interpret and Manipulate raw sequencing data
-### Align HTS data against a genome
-### Visualize alignments
-### Broadly describe different HTS applications
+.  Broadly describe the High Throughput Sequencing Workflow
+. Interpret and Manipulate raw sequencing data
+. Align HTS data against a genome
+. Visualize alignments
+. Broadly describe different HTS applications
  
 ## Learning Outcomes
 
@@ -100,7 +99,7 @@ Given this probability of error, it is not surprising that the machine could not
 <details><summary>Click Here to see the answer</summary><p>
 The base quality character is 'I', which corresponds to the decimal 73 in the ASCII table. Q = 73-33 = 40. P(40) = 10^(-40/10) = 10^-4 = 0.01% error.
 </p></details>
-
+<br/>
 **QUESTION**: What is the probability of error of the last base of the read?
 <details><summary>Click Here to see the answer</summary><p>
 The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-4 ~= 4% error.
