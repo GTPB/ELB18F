@@ -125,18 +125,18 @@ Other plots indicate biases in nucleotidic content of reads, either globally (su
 **TASK**: Open a terminal. type 'fastqc' and press enter. The graphical interface of FastQC should appear. Open the file MiSeq_76bp.fastq.gz inside of the folder fastq_examples. Look at the different plots you obtained. Next, open the file MiSeq_250bp.fastq.gz. Press the green button when you ran FastQC on both cases.
 
 **QUESTION**: What information is in a FastQC report?
-<details><summary>Click Here to see the answer</summary><p>
+<p><details><summary>Click Here to see the answer</summary>
 A FastQC report includes, among other things:
-- Basic statistics of the fastq file, including number of reads and sequence length
-- Per base sequence quality, displaying the boxplot distribution of the Phred Quality (Q) per base for all reads.
-- Per sequence quality scores displaying the histogram of the mean quality (Q value) of the bases of each read, for all reads
-- Per base sequence content, displaying the frequency of each nucleotide at each position of the read
-- Per sequence GC content displaying the histogram of the GC frequency of each read, for all reads
-- Sequence length distribution displaying the histogram of read lengths
-- Sequence duplication levels displaying the histograms of the number of times reads appear with exactly the same sequence
-- Overrepresented sequences (not necessarily complete reads) that appear more frequently than randomly expected
-- Adapter content indicaring the frequency of sequences of know sequencing adaptors along the length of the reads
-</p></details>
+  - Basic statistics of the fastq file, including number of reads and sequence length
+  - Per base sequence quality, displaying the boxplot distribution of the Phred Quality (Q) per base for all reads.
+  - Per sequence quality scores displaying the histogram of the mean quality (Q value) of the bases of each read, for all reads
+  - Per base sequence content, displaying the frequency of each nucleotide at each position of the read
+  - Per sequence GC content displaying the histogram of the GC frequency of each read, for all reads
+  - Sequence length distribution displaying the histogram of read lengths
+  - Sequence duplication levels displaying the histograms of the number of times reads appear with exactly the same sequence
+  - Overrepresented sequences (not necessarily complete reads) that appear more frequently than randomly expected
+  - Adapter content indicaring the frequency of sequences of know sequencing adaptors along the length of the reads
+</details></p><br/>
 
 **QUESTION**: What are the main differences between the reports of both fastq files?
 <details><summary>Click Here to see the answer</summary><p>
