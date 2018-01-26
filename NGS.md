@@ -11,7 +11,6 @@
 ## Learning Outcomes
 
   -  Broadly describe the High Throughput Sequencing Workflow
-    + What are the usual steps in a sequencing experiment
 
   - Interpret and Manipulate raw sequencing data
     + The FastQ file format
