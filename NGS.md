@@ -10,7 +10,7 @@
  
 ## Learning Outcomes:
 
-  -  Broadly describe the High Throughput Sequencing Workflow
+  - [Broadly describe the High Throughput Sequencing Workflow](#LO1)
 
   - Interpret and Manipulate raw sequencing data
     + The FastQ file format
@@ -31,7 +31,7 @@
     + 16S Metagenomics
     + Epigenetics
 
-## Introduction
+## <a id="LO1">The High Throughput Sequencing Workflow</a>
 
 [Sanger sequencing](https://en.wikipedia.org/wiki/Sanger_sequencing) brought about a technological revolution, as it allowed to directly read DNA molecules with relative ease and affordability. The [Human Genome Project](https://en.wikipedia.org/wiki/Human_Genome_Project) motivated further progress, leading to automated DNA-sequencing machines capable of sequencing up to 384 samples in a single batch using capillary electrophoresis. 
 
@@ -126,6 +126,8 @@ Other plots indicate biases in nucleotidic content of reads, either globally (su
 
 **QUESTION**: What information is in a FastQC report?
 <details><summary>Click Here to see the answer</summary>
+
+
 A FastQC report includes, among other things:  
 
   * Basic statistics of the fastq file, including number of reads and sequence length
@@ -149,12 +151,21 @@ A FastQC report includes, among other things:
 </details><br/>
 
 **QUESTION**: What are the main differences between the reports of both fastq files?
-<details><summary>Click Here to see the answer</summary><p>
+<details><summary>Click Here to see the answer</summary>
 TODO TODO TODO
-</p></details>
+</details>
+<br/>
 
+**TASK**: In a terminal window, go to the folder fastq_examples. Type 'fastqc *.fastq.gz' and press enter. 
 
-**TASK**: In a terminal window, go to the folder fastq_examples. Type 'fastqc *.fastq.gz' and press enter. What did you obtain? Inspect all files and compare the different technologies. Illumina machines generate shorter reads, usually all with the same length. Pacbio and nanopore generate (much) longer reads, with diverse read lengths, and of a poorer quality. Illumina generates many more reads, making both technologies complementary to each other (this will become clearer when we look at specific applications). Finally, you can also notice that, independently of the technology, the quality of base quality tends to decrease along the length of the read.
+**QUESTION**: Can you see differences between the different sequenceing technologies?
+<details><summary>Click Here to see the answer</summary>
+Illumina machines generate shorter reads, all with the same length. Pacbio and nanopore generate (much) longer reads, with diverse read lengths, and of a poorer quality. Illumina generates many more reads, making both technologies complementary to each other (this will become clearer when we look at specific applications). Finally, you can also notice that, independently of the technology, the quality of base quality tends to decrease along the length of the read.
+</details>
+<br/>
+
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
 
 ### Filtering and Trimming
 
