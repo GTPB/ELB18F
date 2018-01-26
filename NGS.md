@@ -1,14 +1,14 @@
 
 # ELB17S
 
-## Learning Objectives: High Throughput Sequencing (HTS)
+## Learning Objectives:
   - Broadly describe the High Throughput Sequencing Workflow
   - Interpret and Manipulate raw sequencing data
   - Align HTS data against a genome
   - Visualize alignments
   - Broadly describe different HTS applications
  
-## Learning Outcomes
+## Learning Outcomes:
 
   -  Broadly describe the High Throughput Sequencing Workflow
 
@@ -71,7 +71,7 @@ Each base has a quality character associated with it, representing how confident
 
 Although there's theoretically no limit, Q usually goes up to around 40 in recent illumina machines.
 
-To obtain this Q value from the character associated to the quality of the base, we have to know that each character (such as '#') has an [ASCII](https://en.wikipedia.org/wiki/Phred_quality_score) decimal value associated (for example, '#' has a value of 35). The Q value of a character is the decimal value corresponding to the entry of that character in the ASCII table, subtracted by 33. For example Q('#') = 35 – 33.
+To obtain this Q value from the character associated to the quality of the base, we have to know that each character (such as '#') has an [ASCII](https://en.wikipedia.org/wiki/ASCII) decimal value associated (for example, '#' has a value of 35). The Q value of a character is the decimal value corresponding to the entry of that character in the ASCII table, subtracted by 33. For example Q('#') = 35 – 33.
 
 **NOTE**: To understand why we need to subtract 33, we have to look into the ASCII table below. We can see that the first visible character ('!') has decimal value 33. This allows visual inspection of qualities.
 
@@ -98,7 +98,9 @@ Given this probability of error, it is not surprising that the machine could not
 <details><summary>Click Here to see the answer</summary><p>
 The base quality character is 'I', which corresponds to the decimal 73 in the ASCII table. Q = 73-33 = 40. P(40) = 10^(-40/10) = 10^-4 = 0.01% error.
 </p></details>
+
 <br/>
+
 **QUESTION**: What is the probability of error of the last base of the read?
 <details><summary>Click Here to see the answer</summary><p>
 The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-4 ~= 4% error.
