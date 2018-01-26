@@ -10,27 +10,27 @@
  
 ## Learning Outcomes
 
-### Broadly describe the High Throughput Sequencing Workflow
-#### What are the usual steps in a sequencing experiment
+  -  Broadly describe the High Throughput Sequencing Workflow
+	+ What are the usual steps in a sequencing experiment
 
-### Interpret and Manipulate raw sequencing data
-#### The FastQ file format
-#### Use FastQC to analyse the quality of data in a fastq file.
-#### Use Trimmomatic to improve the quality of data in a fastq file.
+	- Interpret and Manipulate raw sequencing data
+		+ The FastQ file format
+		+ Use FastQC to analyse the quality of data in a fastq file.
+		+ Use Trimmomatic to improve the quality of data in a fastq file.
 
-### Align HTS data against a genome
-#### Use the BWA aligner to align HTS data against a genome
-#### The SAM/BAM alignment format
+  - Align HTS data against a genome
+		+ Use the BWA aligner to align HTS data against a genome
+		+ The SAM/BAM alignment format 
 
-### Visualize alignments
-#### Use IGV to visualize the content of a BAM file
+  - Visualize alignments
+		+ Use IGV to visualize the content of a BAM file
 
-### Broadly describe different HTS applications
-#### Variant detection in resequencing experiments
-#### Denovo genome assembly and annotation
-#### Transcriptomics using RNA-Seq
-#### 16S Metagenomics
-#### Epigenetics
+  - Broadly describe different HTS applications
+		+ Variant detection in resequencing experiments
+		+ Denovo genome assembly and annotation
+		+ Transcriptomics using RNA-Seq
+		+ 16S Metagenomics
+		+ Epigenetics
 
 ## Introduction
 
