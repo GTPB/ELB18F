@@ -2,11 +2,11 @@
 # ELB17S
 
 ## Learning Objectives: High Throughput Sequencing (HTS)
-.  Broadly describe the High Throughput Sequencing Workflow
-. Interpret and Manipulate raw sequencing data
-. Align HTS data against a genome
-. Visualize alignments
-. Broadly describe different HTS applications
+  .  Broadly describe the High Throughput Sequencing Workflow
+  . Interpret and Manipulate raw sequencing data
+  . Align HTS data against a genome
+  . Visualize alignments
+  . Broadly describe different HTS applications
  
 ## Learning Outcomes
 
