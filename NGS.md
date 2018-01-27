@@ -158,11 +158,23 @@ The MiSeq_250bp fastq file contains 10000 reads of 250bp, while the MiSeq_76bp c
 
 **TASK**: In a terminal window, go to the folder fastq_examples. Type 'fastqc *.fastq.gz' and press enter. 
 
-**QUESTION**: Can you see differences between the different sequenceing technologies?
+**QUESTION**: Can you see differences between the different sequencing technologies?
 <details><summary>Click Here to see the answer</summary>
 Illumina machines generate shorter reads, all with the same length. Pacbio and nanopore generate (much) longer reads, with diverse read lengths, and of a poorer quality. Illumina generates many more reads, making both technologies complementary to each other (this will become clearer when we look at specific applications). Finally, you can also notice that, independently of the technology, the quality of base quality tends to decrease along the length of the read.
 </details>
 <br/>
+
+
+Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files old_illumina_paired_1 (containing the forward reads) and old_illumina_paired_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
+
+![Adaptor](images/paired-end.jpg)
+
+**QUESTION**: What is the major difference between old_illumina_paired_1 and old_illumina_paired_2?
+<details><summary>Click Here to see the answer</summary>
+The reverse read usually has poorer quality bases, at least in illumina. This is because the reverse reads are generated after the forward reads.
+</details>
+<br/>
+
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
@@ -171,18 +183,52 @@ Illumina machines generate shorter reads, all with the same length. Pacbio and n
 
 As you may have noticed before, reads tend to lose quality towards their end, where there is a higher probability of erroneous bases being called. To avoid problems in subsequent analysis, you should remove bases with higher probability of error, usually by trimming poor quality bases from the end.
 
-**TASK**: Manually remove the bases with Q<30 from the 3' end of the read you analysed before. Press Green when finished.
+**TASK**: Manually remove the bases with Q<30 from the 3' end of the read you analysed before.
 
 	@SRR022885.1 BI:080102_SL-XAR_0001_FC201E9AAXX:6:1:752:593/1
 	CGTACCAATTATTCAACGTCGCCAGTTGCTTCATGT
 	+
 	IIIIIIIIII>IIIIIII@IIII.I+I>35I0I&+/
 
-**Questions**: Does this remove all lower quality bases from the read? What other strategies you can imagine to filter your reads? Can you remove bases in the middle of reads? Why?
+**QUESTION**: How is the read after this trimming operation?
+<details><summary>Click Here to see the answer</summary>
+
+	@SRR022885.1 BI:080102_SL-XAR_0001_FC201E9AAXX:6:1:752:593/1
+	CGTACCAATTATTCAACGTCGCCAGTTGCTTCA
+	+
+	IIIIIIIIII>IIIIIII@IIII.I+I>35I0I
+
+</details>
+<br/>
+
+
+**QUESTION**: Did you remove all lower quality bases from the read? What other strategies you can imagine to filter your reads?
+<details><summary>Click Here to see the answer</summary>
+
+	* No. There are still low quality bases in the read (NOTE: this does not mean the base is wrong, just that it is more likely to be wrong). 
+	
+	* Instead of looking only at the last base, one can look at the mean quality of the k (eg. k=4) last bases to decide if a base should be removed or not. Another alternative that is often used is to find the longest continuous stretch of bases with a quality above a certain value.
+	
+</details>
+<br/>
+
+**QUESTION**: Can you remove bases in the middle of reads? Why?
+<details><summary>Click Here to see the answer</summary>
+
+	**NO!** Because you would be making artificial deletions in the sequence.
+	
+</details>
+<br/>
 	
 Like you have FastQC to automatically produce plots from fastq files, you also have software to filter low quality bases from fastq files. [Seqtk](https://github.com/lh3/seqtk) is a very simple tool that you can use to perform this filtering. 
 
-**TASK**: In a terminal, go to folder fastq_examples. Type 'seqtk trimfq -q 0.01 MiSeq_250bp.fastq.gz > MiSeq_250bp.trimmed.fastq'. What is this command doing? Use fastQC to check the new fastq file that is created by this command. Press green when finished.
+**TASK**: In a terminal, go to folder fastq_examples. Type 'seqtk trimfq -q 0.01 MiSeq_250bp.fastq.gz > MiSeq_250bp.trimmed.fastq'. 
+
+**QUESTION**: What is this command doing? Use fastQC to check the new fastq file that is created by this command. 
+<details><summary>Click Here to see the answer</summary>
+	Seqtk removes bad quality bases from the ends of reads. In this case, it removes bases with a probability of error greater than 1% (0.01), corresponding to Q<20.
+</details>
+<br/>
 
 Most software for the analysis of HTS data is freely available to users. Nonetheless, they often require the use of the command line in a Unix-like environment (seqtk is one such case). User-friendly desktop software such as [CLC](https://www.qiagenbioinformatics.com/products/clc-genomics-workbench/) or [Ugene](http://ugene.net/) is available, but given the quick pace of developmpent in this area, they are constantly outdated. Moreover, even with better algorithms, HTS analysis must often be run in external servers due to the heavy computational requirements. One popular tool is [Galaxy](https://galaxyproject.org/), which allows even non-expert users to execute many different HTS analysis programs through a simple web interface.
 
@@ -190,17 +236,40 @@ Most software for the analysis of HTS data is freely available to users. Nonethe
 
 As we saw before, sequencing machines (namely, the illumina ones) require that you add specific sequences (adaptors) to your DNA so that it can be sequenced. For many different reasons, such sequences may end up in your read, and you need to remove these artifacts from your sequences.
 
-**Question**: Can you think of a reason why the adaptors can appear in your sequences? Take the sample MiSeq_76bp.fastq.gz as an example.
+**QUESTION**: How can adaptors appear in your sequences? Take the sample MiSeq_76bp.fastq.gz as an example. 
+<details><summary>Click Here to see the answer</summary>
+	When the fragment being read is smaller than the number of bases the sequencing machine reads, then it will start reading the bases of the adaptor that is attached to all fragments so they can be read by the machines. In the case of MiSeq_76bp, the fragments were all 36bp, and since 76bp were being read, the remaining bases belong to the illumina adaptor that was used.
+</details>
+<br/>
 
 There are many programs to remove adaptors from your sequences, such as [cutadapt](https://cutadapt.readthedocs.org/en/stable/). To use them you need to know the adaptors that were used in your library preparation (eg. Illumina TruSeq). For this you need to ask the sequencing center that generated your data.
 
-**TASK**: In Galaxy, use cutadapt to remove adaptors from MiSeq_76bp.fastq.gz. In this sample, we know that we used the illumina adaptor GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT, so try to remove this from the 3' end of reads and see the impact of the procedure using FastQC. For this, you need to insert a new adapter in 3', and in the source, select "Enter a custom sequence" (you don't need to add a name, just paste the sequence). What happened? Almost no read was affected. This is because what you get is a readthrough, so you actually have the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). Much better, no? Press green when you've completed the task.
+**TASK**: In Galaxy, use cutadapt to remove adaptors from MiSeq_76bp.fastq.gz. In this sample, we know that we used the illumina adaptor GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT, so try to remove this from the 3' end of reads and see the impact of the procedure using FastQC. For this, you need to insert a new adapter in 3', and in the source, select "Enter a custom sequence" (you don't need to add a name, just paste the sequence). 
 
-[Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) is a tool that performs both trimming of low quality reads, as well as adaptor removal. Moreover, it already contains a library of commonly used adaptors, so you don't need to know their sequence. As FastQC, it is a java program, so you can use it in any operating system (such as Windows and Mac), although unlike FastQC it needs to be run only using the commandline. 
+**QUESTION**: What happened? To answer, look at the report from cutadapt, and use FastQC on the fastq that is output by cutadapt. 
+<details><summary>Click Here to see the answer</summary>
+	Almost no read was affected. This is because what you get is a readthrough, so what is actually in the read is the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). This time, most reads should have had the adaptor removed.
+</details>
+<br/>
 
-**TASK**: In Galaxy, use Trimmomatic to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads (for this you need to select to perform an initial Illumina clip). Unlike seqtk, which always assume Phred scores (based on the "!" character), Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). After you checked that this is the case in the FastQC report, you can edit the attributes of you file (the pencil mark) and change the datatype to fastqsanger. Press green when you've completed the task.
+[Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) is a tool that performs both trimming of low quality reads, as well as adaptor removal. Moreover, it already contains a library of commonly used adaptors, so you don't need to know their sequence. Similar to FastQC, it is a java program, so you can use it in any operating system (such as Windows and Mac), although unlike FastQC it needs to be run only using the commandline. 
 
-**Question**: What if you want to perform filtering and trimming on paired reads? Do you see a potential issue? What do these programs need to take into accout when dealing with paired data? 
+**TASK**: In Galaxy, use Trimmomatic to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads (for this you need to select to perform an initial Illumina clip). Unlike seqtk, which always assume Phred scores (based on the "!" character), Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). After you checked that this is the case in the FastQC report, you can edit the attributes of you file (the pencil mark) and change the datatype to fastqsanger.
+
+**QUESTION**: What happened? To answer, look at the report from cutadapt, and use FastQC on the fastq that is output by cutadapt. 
+<details><summary>Click Here to see the answer</summary>
+	Almost no read was affected. This is because what you get is a readthrough, so what is actually in the read is the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). This time, most reads should have had the adaptor removed.
+</details>
+<br/>
+
+**QUESTION**: Can you trim the paired-end forward and reverse fastq files separately? 
+<details><summary>Click Here to see the answer</summary>
+	No, because you will lose the pairing information. Triming software allows you to pass both files simultaneously so the pairing information is kept in the output.
+</details>
+<br/>
+
+
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
 ## Applications of HTS
 
