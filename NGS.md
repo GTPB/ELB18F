@@ -371,7 +371,9 @@ You can also directly visualize the alignments using appropriate software such a
 **QUESTION:** Paste in the interval window on the top this position: 'Chromosome:3846244-3846290'. What can you see? 
 <details><summary>Click Here to see the answer</summary>
 You can see an A to C SNP (Single Nucleotide Polymorphism) at position 3846267.
+
 ![IGV SNP](images/igv_snp.png)
+
 </details>
 <br/>
 
