@@ -371,9 +371,12 @@ You can also directly visualize the alignments using appropriate software such a
 </details>
 <br/>
 
-**QUESTION:** Paste in the interval window on the top this position: 'Chromosome:1-1000 and Chromosome:4640500-4641652'. What can you see? 
+**QUESTION:** Paste in the interval window on the top these two positions separated by space: 'Chromosome:1-1000 Chromosome:4640500-4641652'. What can you see? 
 <details><summary>Click Here to see the answer</summary>
-	You should see colors in the reads. What do you think is the meaning of those colors? TODO...
+	You should see colors in some reads. These colors mean that the fragment lengths (estimated by the distances between the paired reads) are much significantly different to the mean fragment lengths. These are usually an indication of a structural variant (such as a large deletion). In this case, the estimated fragment length is the size of the genome! This is easy to understand if you realize this is a circular genome from a bacteria, and thus it is natural that a read aligning in the "beginning" of the genome may have its pair aligning in the "end" of the genome.
+	
+	![IGV SV](images/igv_sv.png) 
+	
 </details>
 <br/>
 
