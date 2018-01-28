@@ -107,6 +107,13 @@ The base quality character is 'I', which corresponds to the decimal 73 in the AS
 The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-4 ~= 4% error.
 </p></details>
 
+**QUESTION**: If all bases of a ficticious machine had a Q=20 (1% probability of error), what would be the probability that one 100bp read from that machine would be completely correct?
+<details><summary>Click Here to see the answer</summary><p>
+P(correct)=(0.99)^100 ~= 36.6%!
+
+This serves to exemplify that most reads in current sequencing machines are likely to have at least one base incorrect.
+</p></details>
+
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
 ### <a id="LO2.2">Quality Check of FastQ data</a>
@@ -438,11 +445,18 @@ The SNP causes a missesse mutation of the gene uhpT, causing an aminoacid change
 </details>
 <br/>
 
-Single nucleotide polymorphisms (SNP) are the variants that are most easily and commonly reported. Other variants pose different challenges and some are particularly difficult, such as the detection of transposable element activity. [Breseq](http://barricklab.org/twiki/bin/view/Lab/ToolsBacterialGenomeResequencing) is a software specialized in detecting several types of genomic events in short timescale evolutionary experiments in bacteria, including transposable elements. It produces user-friendly variant reports, including the functional annotation of variants that have been detected. This means it can predict not only which variants there are and where they are, but also their potential effects (in which genes, if they fall in a coding region, etc...).
+Single nucleotide polymorphisms (SNP) are the variants that are most easily and commonly reported. Other variants pose different challenges and some are particularly difficult, such as the detection of transposable element activity. [Breseq](http://barricklab.org/twiki/bin/view/Lab/ToolsBacterialGenomeResequencing) is a software specialized in detecting several types of genomic events in short timescale evolutionary experiments in bacteria, including the movement of transposable elements. It produces user-friendly variant reports, including the functional annotation of variants that have been detected. This means it can predict not only which variants there are and where they are, but also their potential effects (in which genes, if they fall in a coding region, etc...).
 
-**TASK**: Unzip the content of the file breseq_results.zip. Inside the folder, open the file index.html (using a web browser such as firefox). Identify SNPs, deletions and movements of transposable elements. What type of evidence is required to safely detect such mutations?
+**TASK**: Unzip the content of the file breseq_results.zip. Inside the folder, open the file index.html (using a web browser such as firefox). Identify the mutation in the uhpT gene that we saw before. Click on the read alignment (RA) evidence link to see the evidence that supports it.
 
-TODO TODO TODO Ver explicação da JC do IS150 do breseq
+**QUESTION:** What other mutations are found? What type of evidence is used for each of them?
+<details><summary>Click Here to see the answer</summary>
+There are 6 SNPs, 2 single base insertions, 1 small duplication and 2 large deletions. For SNPs and single base insertions only read alignment evidence is required. For deletions, missing coverage is necessary, as well as evidence for the new junctions that appear due to the deletion. For duplications there is the evidence of the new junctions.
+
+In the bottom of the page we can see unassigned missing coverage and junction evidences. They are indications of possible variants, but for which not all criteria are met (eg. there is missing coverage, but no junctions to unequivocally identify a deletion).
+
+</details>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
@@ -450,7 +464,7 @@ TODO TODO TODO Ver explicação da JC do IS150 do breseq
 
 Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble these millions of reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
 
-**TASK**: Discuss the following: given that you know that most genomes contain repetitive sequences, do you think you can usually obtain a complete genome with a single NGS experiment sequencing only short reads (even for bacteria)? Do you think only sequencing more short reads can solve the issue?
+**QUESTION**: Discuss the following: given that you know that most genomes contain repetitive sequences, do you think you can usually obtain a complete genome with a single NGS experiment sequencing only short reads (even for bacteria)? Do you think only sequencing more short reads can solve the issue?
 
 **TASK**: In the terminal, type 'spades.py -1 SRR1030347_1.fastq.interval.fq -2 SRR1030347_2.fastq.interval.fq  -o SRR1030347_spades'. After spades finishing successfully, there should be a folder SRR1030347_spades. Inside you should have scaffolds fasta file.
 
