@@ -379,16 +379,19 @@ You can see an A to C SNP (Single Nucleotide Polymorphism) at position 3846267.
 
 **QUESTION:** Paste in the interval window on the top these two positions separated by space: 'Chromosome:1-1000 Chromosome:4640500-4641652'. What can you see? 
 <details><summary>Click Here to see the answer</summary>
-	You should see colors in some reads. These colors mean that the fragment lengths (estimated by the distances between the paired reads) are much significantly different to the mean fragment lengths. These are usually an indication of a structural variant (such as a large deletion). In this case, the estimated fragment length is the size of the genome! This is easy to understand if you realize this is a circular genome from a bacteria, and thus it is natural that a read aligning in the "beginning" of the genome may have its pair aligning in the "end" of the genome.
+You should see colors in some reads. These colors mean that the fragment lengths (estimated by the distances between the paired reads) are much significantly different to the mean fragment lengths. These are usually an indication of a structural variant (such as a large deletion). In this case, the estimated fragment length is the size of the genome! This is easy to understand if you realize this is a circular genome from a bacteria, and thus it is natural that a read aligning in the "beginning" of the genome may have its pair aligning in the "end" of the genome.
 	
-	![IGV SV](images/igv_sv.png) 
+![IGV SV](images/igv_sv.png) 
 	
 </details>
 <br/>
 
 **QUESTION:** Paste in the interval window on the top this position: 'Chromosome:3759212-3768438'. What can you see? 
 <details><summary>Click Here to see the answer</summary>
-	You can see two regions where the reads are marked in white, both with slightly less coverage than the remaining regions marked in gray. The reads marked in white have a mapping quality of Q=0, which means the aligner does not know where these reads actually belong to. Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
+You can see two regions where the reads are marked in white, both with slightly less coverage than the remaining regions marked in gray. The reads marked in white have a mapping quality of Q=0, which means the aligner does not know where these reads actually belong to. Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
+
+![IGV SV](images/igv_uniq.png) 
+
 </details>
 <br/>
 
@@ -422,11 +425,22 @@ Sequencing and alignment errors cause many artefactual variants to appear. There
 
 After inferring trustworthy variants, their functional annotation (namely, of their impact) is usually performed by specialized tools such as the Variant Effect Predictor ([VEP](http://www.ensembl.org/info/docs/tools/vep/index.html)) that take into account information on the reference genome (namely, where are the genes).
 
-TODO TODO TODO Ver se consigo correr VEP com resultados freebayes (talvez precise mudar nome)
+**TASK** Go to the website [bacteria.ensembl.org](http://bacteria.ensembl.org). Select **Tools** and **Variant Effect Predictor**. 
+
+![VEP Input](images/vep_input.png) 
+
+**QUESTION:** What is the effect predicted by VEP of the A to C mutation we observed?
+<details><summary>Click Here to see the answer</summary>
+The SNP causes a missesse mutation of the gene uhpT, causing an aminoacid change from Phenylalanine to Valin at position 301 of the protein.
+
+![VEP Output](images/vep_output.png) 
+
+</details>
+<br/>
 
 Single nucleotide polymorphisms (SNP) are the variants that are most easily and commonly reported. Other variants pose different challenges and some are particularly difficult, such as the detection of transposable element activity. [Breseq](http://barricklab.org/twiki/bin/view/Lab/ToolsBacterialGenomeResequencing) is a software specialized in detecting several types of genomic events in short timescale evolutionary experiments in bacteria, including transposable elements. It produces user-friendly variant reports, including the functional annotation of variants that have been detected. This means it can predict not only which variants there are and where they are, but also their potential effects (in which genes, if they fall in a coding region, etc...).
 
-**TASK**: Open an example output file from breseq (index.html). Identify SNPs, deletions and movements of transposable elements. What type of evidence is required to safely detect such mutations? Turn on the green light when you're finished.
+**TASK**: Unzip the content of the file breseq_results.zip. Inside the folder, open the file index.html (using a web browser such as firefox). Identify SNPs, deletions and movements of transposable elements. What type of evidence is required to safely detect such mutations?
 
 TODO TODO TODO Ver explicação da JC do IS150 do breseq
 
