@@ -432,7 +432,7 @@ Sequencing and alignment errors cause many artefactual variants to appear. There
 
 After inferring trustworthy variants, their functional annotation (namely, of their impact) is usually performed by specialized tools such as the Variant Effect Predictor ([VEP](http://www.ensembl.org/info/docs/tools/vep/index.html)) that take into account information on the reference genome (namely, where are the genes).
 
-**TASK** Go to the website [bacteria.ensembl.org](http://bacteria.ensembl.org). Select **Tools** and **Variant Effect Predictor**. 
+**TASK** Go to the website [bacteria.ensembl.org](http://bacteria.ensembl.org). Select **Tools** and **Variant Effect Predictor**. Upload the vcf file (the last one you generated) and press "Run".
 
 ![VEP Input](images/vep_input.png) 
 
@@ -464,25 +464,58 @@ In the bottom of the page we can see unassigned missing coverage and junction ev
 
 Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble these millions of reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
 
-**QUESTION**: Discuss the following: given that you know that most genomes contain repetitive sequences, do you think you can usually obtain a complete genome with a single NGS experiment sequencing only short reads (even for bacteria)? Do you think only sequencing more short reads can solve the issue?
+**TASK**: In the terminal, type 'spades.py -1 SRR1030347_1.fastq.interval.fq -2 SRR1030347_2.fastq.interval.fq  -o SRR1030347_spades'. After spades finishing successfully, there should be a folder SRR1030347_spades. Inside the folder you should have a scaffolds.fasta file.
 
-**TASK**: In the terminal, type 'spades.py -1 SRR1030347_1.fastq.interval.fq -2 SRR1030347_2.fastq.interval.fq  -o SRR1030347_spades'. After spades finishing successfully, there should be a folder SRR1030347_spades. Inside you should have scaffolds fasta file.
+**QUESTION**: You sequenced DNA from one bacterial species using only single-end and short (100bp) sequencing data, but when doing a denovo assembly of the genome, instead of obtaining a single sequence for the full circular genome, you obtained several smaller sequences. What should be the main reason for this result? Will getting more sequences of the same type necessarily solve the problem ? 
+<details><summary>Click Here to see the answer</summary>
+The major limiting factor in the assembly process is the presence of repetitive sequences that are longer than the fragment length we can sequence. In this case, any sequence that is longer than 100bp and appears more than once in the genome will make it impossible for the assembler to unambiguously connect its borders, thus breaking the assembly into smaller contigs. Getting more small sequences will not solve the undelrying limitation, only getting longer reads, or/and using paired-end data.
+</details>
+<br/>
 
-When doing de novo genome assembly, we need to scaffold millions of pieces together. This process depends non-linearly on many factors. To assess how well the genome assembly process went, you usually want your assembled genome to be in as few pieces as possible, and that each piece is as large as possible. The usual N50, which is the size of the smallest contig that we need to include to have at least 50% of the assembled sequence (the higher the N50, the less fragmented is our assembly).
+When doing de novo genome assembly, we need to scaffold millions of pieces together. This process depends non-linearly on many factors. 
 
-Nonetheless, this is not (and should not) be the only measure used to assess the quality of the genome. [Quast](http://bioinf.spbau.ru/quast) is an example of a software that produces several measures to assess genome assemblies.
+**QUESTION:** What factors may influence the genome assembly process?
+<details><summary>Click Here to see the answer</summary>
 
-**TASK**: Open the file report.html inside the folder quast_results. You can see differente measures comparing assemblies made with different datasets. What are the factors influencing genome assembly? In which way they influence assembly? What is the best assembly? Why? Turn on the green light when finished.
+  * Quality of Reads: sequences with more errors are likely to make the assembly process harder and error-prone.
+  
+  * Length of Reads: as we discussed before, the longer the reads, the more likely it is to have unambiguously overlapping fragments. If we can only have short reads (such as in illumina), we can simulate longer reads through paired-end sequencing. Nonetheless, even this is limited to 1-2kb. Methods such as mate-pair sequencing allow to simulate even longer fragments (5k, 20k or longer) by using paired-end reading with circularized fragments. Modern sequencing technologies such as PacBio or MinION allow the direct sequencing of very long reads (up to 100kb or more), although with a much higher error rate.
+  
+  * Number of Reads: The more we have usually the better, although there is always the limitation of the length we discussed before. Nonetheless, having too many reads may also cause trouble to the assembly. It is usually not recommended to have more than 200x global coverage, as spurious errors may appear frequently enough to make the assembler generate false contigs.
 
-The genome assembly process generates a sequence of nucleotides. Now we need to annotate the genome, namely to know where genes are and what are their possible functions. In bacteria, this is reasonably feasible, and there are already programs that allow a reasonably good quality annotation, such as [prokka](https://github.com/tseemann/prokka). In eukaryotes this process is much harder and requires multiple steps of validation.
+</details>
+<br/>
 
-**TASK**: Open and browse an example assembly with IGV: load the reference genome 'example_assembly.fasta' and open the genome annotation 'example_assembly.prokka.gff'. How many genes where detected by prokka? Open the following files with a text editor: example_assembly.prokka.fasta and example_assembly.prokka.gbk. Turn on the green light when finished.
+We usually want the assembled genome to be in as few pieces as possible, and that each piece is as large as possible. Of course, we also want the sequences to be as correct as possible. There are different measures we need to take into consideration to evaluate the quality of an assembly. [Quast](http://bioinf.spbau.ru/quast) is an example of a software that produces several measures to assess the quality of genome assemblies. Quast can test one (or several) genome assemblies (as fasta files). 
 
-Fazer quast do genoma obtido (talvez)?
+**TASK**: We have generated genome assemblies using diferent datasets to test different factors that affect the assembly process. Namely, we compared datasets with raw unprocessed reads (less_clean) and quality trimmed reads (more_clean). We have also compared datasets using single or paired reads. Another experiment compared single-end datasets of different read length (shorter_50bp, medium_100bp, longer_200bp). Finally, we compared the effect of using more reads (cov_200k, cov_1M, cov_2M). To compare all these assemblies (all derived from the same Escherichia coli sample), we used Quast to obtain different quality measures. In the assembly experiments folder, unzip the file quast_results.zip. Open the file report.html inside the folder quast_results.
 
-Fazer introdução ao quast_results.zip antes de os mandar aos leoes.
+**QUESTION:** What quality measures are produced by Quast?
+<details><summary>Click Here to see the answer</summary>
 
-Dar maior introdução aos datasets usados no exemplo.
+Among several measures, a Quast report contains:
+
+  * Number of contigs and their length. Ideally, we want to have one contig per chromosome (in this case, we would like to have only 1 contig), so we want as few and as long as possible, with the largest total length (sum of the length of all the contigs). A number that is most often used to measure the quality of an assembly is the N50, which is the length of the smallest contig such that at least 50% of the total length of the assembly is covered by contigs larger than that contig.
+  
+  * Statistics depending on a given reference genome. We may have a very long assembly, but it may still be wrong. To try to assess this, if we know that our sample should be relatively similar to a given known species (in our case Escherichia coli) then we can use that information to assess for quality. We can see how close if the total length of the assembly is to the length of the reference (Genome Fraction), how many bases are different from the assembly (mismatches) and how may structural variants we find (misassemblies). The argument is, if we are comparing different assemblies for the same sample, we want to minimize mismatches and misassemblies. Nonetheless, if we are doing an assembly, that's because we suspect the sample we are working with is sufficiently different from the reference. Therefore, these reference-based measures need to be taken with care.
+
+</details>
+<br/>
+
+**QUESTION:** What is the best assembly? Why?
+<details><summary>Click Here to see the answer</summary>
+The best overall assembly seems to be the paired assembly. It has less contigs and longest N50, covering most of the reference genome while keeping a low number of mismatches. The results indicate that cleaner reads, paired-end data, longer reads and more coverage usually give better assemblies. Nonetheless, there are always balances that need to be taken into consideration. For example, more_clean was obtained from less_clean by filtering, and thus contains less data. That's probably why, although we obtain a longer N50 and less mismatches, we lose some fraction of the genome coverage.
+</details>
+<br/>
+
+The genome assembly process generates a sequence of nucleotides in the form of a fasta file. Now we need to annotate the genome, namely to know where genes are and what are their possible functions. In bacteria, this is reasonably feasible, and there are already programs that allow a reasonably good quality annotation, such as [prokka](https://github.com/tseemann/prokka). In eukaryotes this process is much harder and requires multiple steps of validation.
+
+
+TODO Explain a bit the different the different files, file formats, etc...
+**TASK**: TODO Open and browse an example assembly with IGV: load the reference genome 'example_assembly.fasta' and open the genome annotation 'example_assembly.prokka.gff'. How many genes where detected by prokka? Open the following files with a text editor: example_assembly.prokka.fasta and example_assembly.prokka.gbk.
+
+**NOTE:** Annotating a genome allow us to use other measures to infer the quality of our assembly. Namely, we usually prefer assemblies where we can annotate more genes (assemblies that are too fragmented, or with incorrect sequence, have less annotated genes). One particular test relates to genes that are present in all species, where we prefer assemblies where we can detect as many of these genes as possible.
+
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
