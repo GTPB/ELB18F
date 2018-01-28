@@ -169,9 +169,9 @@ Many sequencing machines can read both ends of a fragment. In this case, the mac
 
 ![Adaptor](images/paired-end.jpg)
 
-**QUESTION**: What is the major difference between old_illumina_paired_1 and old_illumina_paired_2?
+**QUESTION**: What is the major difference between the two paired fastq files of the paired_example?
 <details><summary>Click Here to see the answer</summary>
-The reverse read usually has poorer quality bases, at least in illumina. This is because the reverse reads are generated after the forward reads.
+The reverse read has poorer quality bases. This is usually the case, at least for illumina. This is because the reverse reads are generated after the forward reads.
 </details>
 <br/>
 
@@ -214,9 +214,7 @@ As you may have noticed before, reads tend to lose quality towards their end, wh
 
 **QUESTION**: Can you remove bases in the middle of reads? Why?
 <details><summary>Click Here to see the answer</summary>
-
 	**NO!** Because you would be making artificial deletions in the sequence.
-	
 </details>
 <br/>
 	
@@ -264,7 +262,7 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 
 **QUESTION**: Can you trim the paired-end forward and reverse fastq files separately? 
 <details><summary>Click Here to see the answer</summary>
-	No, because you will lose the pairing information. Triming software allows you to pass both files simultaneously so the pairing information is kept in the output.
+	No, because you will lose the pairing information. Trimming software allows you to pass both files simultaneously so the pairing information is kept in the output.
 </details>
 <br/>
 
@@ -283,48 +281,146 @@ After obtaining millions of short reads, we need to align them to a (sometimes l
 
 **NOTE:** Aligners based on the burrows-wheeler transform makes some assumptions to speed up the alignment process. Namely, they require the reference genome to be very similar to your sequenced DNA (less than 2-5% differences). Moreover, they are not optimal, and therefore sometimes make some mistakes.
 
-**TASK** The first step of a burrows-wheeler aligner is to make an index from the fasta of the reference genome. open a terminal window, go to the folder resequencing and type 'bwa index NC_000913.3_MG1655.fasta'. Now, we can do the alignment against the created database. Type 'bwa mem NC_000913.3_MG1655.fasta SRR1030347_1.fastq.interval.fq SRR1030347_2.fastq.interval.fq > SRR1030347.alignment.sam'. Open the sam file with a text editor, and/or type in the terminal window 'head SRR1030347.alignment.sam'. To make it easier to analyse you can copy the contents and paste them in a spreadsheet program. Press green when finished.
+**TASK** The first step of a burrows-wheeler aligner is to make an index from the fasta of the reference genome. open a terminal window, go to the folder resequencing and type 'bwa index NC_000913.3_MG1655.fasta'. Now, we can do the alignment against the created database. Type 'bwa mem NC_000913.3_MG1655.fasta SRR1030347_1.fastq.interval.fq SRR1030347_2.fastq.interval.fq > SRR1030347.alignment.sam'. 
 
-**NOTE:** bwa mem is an update based on the original bwa to allow for aligning longer reads from newer illumina machines. It allows for split alignments, although it was not specifically designed for RNA-Seq (like we will see later in the course).
+**NOTE:** You may have noticed that we used paired fastq files in this alignment. The aligners can use the pairing information to improve the alignments, as we will see later.
 
 To store millions of alignments, researchers also had to develop new, more practical formats. The [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf) is a tabular text file format, where each line contains information for one alignment.
  
 ![SAM Structure](images/bam_structure.png) 
 
+**TASK** Open the sam file you generated before (SRR1030347.alignment.sam) with a text editor, and/or type in the terminal window 'head SRR1030347.alignment.sam'. To make it easier to analyse you can copy the contents and paste them in a spreadsheet program.
+
+**QUESTION**: What is the position of the start of the first alignment in your SAM file? 
+<details><summary>Click Here to see the answer</summary>
+	Read SRR1030347.285 aligns starting in position 14 (information in the 4th column of the SAM).
+</details>
+<br/>
+
 SAM files are most often compressed as BAM (Binary SAM) files, to reduce space. These BAM files can then be indexed (do not confuse this indexing with the indexing of the reference genome) to allow direct access to alignments in any arbitrary region of the genome. Several tools only work with BAM files.
 
 **TASK** Let's transform the SAM file into an indexed BAM file. In the same terminal window where you indexed the genome, type 'samtools view -Sb SRR1030347.alignment.sam > SRR1030347.alignment.bam'. To create the index, the alignments in the bam file need to be sorted by position. Type 'samtools sort SRR1030347.alignment.bam -o SRR1030347.alignment.sorted.bam'. Finally, we can create the index 'samtools index SRR1030347.alignment.sorted.bam'. Notice now the appearance of a companion file SRR1030347.alignment.sorted.bam.bai that contains the index. This file should always accompany its corresponding bam file.
 
-**TASK** Let's do the whole process using galaxy. Upload the reference genome and the paired fastq files into Galaxy. Check their quality and perform any necessary filtering using trimmomatic or with any of the tools we saw before. Next, perform an alignment with bwa mem of the paired reads (you need to select the option of paired reads) against the reference genome (choose one from history). Next, download the bam file that was created. Also download the companion bai index file. Turn on the green light when you finished.
+**TASK** Let's do the whole process using galaxy. Upload the reference genome and the paired fastq files into Galaxy. Check their quality and perform any necessary filtering using trimmomatic or with any of the tools we saw before. Next, perform an alignment with bwa mem of the paired reads (you need to select the option of paired reads) against the reference genome (choose one from history). Next, download the bam file that was created. Also download the companion bai index file (you need to press on the download icon to have the option to download the bam and the bai files). 
+
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
 #### Visualizing alignment results
 
 After generating alignments and obtaining a SAM/BAM file, how do I know this step went well? The same way as FastQC generates reports of fastq files to assess quality of raw data, there are programs that generate global reports on the quality of alignments. One popular tool for this is [qualimap](http://qualimap.bioinfo.cipf.es/).
 
-**TASK** In the terminal window, type 'qualimap bamqc -bam SRR1030347.alignment.sorted.bam'. Open the report file generated by qualimap (there is a report html inside a new folder that qualimap creates).  Turn on the green light when finished.
+**TASK** In the terminal window, type 'qualimap bamqc -bam SRR1030347.alignment.sorted.bam'. Open the report file generated by qualimap (there is a report html inside a new folder that qualimap creates).
 
-**TASK**: Open the reports example_HiSeqBGI.pdf and example_MiSeq.pdf and compare the sequence coverage graphs and insert size histograms. 
+**QUESTION**: What information is in a Qualimap report?
+<details><summary>Click Here to see the answer</summary>
 
-**NOTE**: The way you check if the alignment step went well depends on your application. Usually, duplication levels higher than 20% are not a good sign (they're a sign of low input DNA and PCR artifacts) but again, depends on what you are sequencing and how much. Similarly, in the case of bacterial sequencing or targeted (eg. exonic) sequencing you expect >95% successful alignment, but if sequencing a full mamallian genome (with many duplicated areas) it may be normal to have as low as 70-80% alignment success. If you have to check the expected “quality” for your application.
+A Qualimap report includes, among other things:  
+
+  * Number of aligned reads and other global statistics
+  
+  * Coverage across the genome and the histogram of coverages
+  
+  * Number of duplicated sequences (that align exactly to the same place)
+  
+  * Histogram of mapping quality (how well the reads align, in a Phred scale)
+  
+  * Distribution of insert size (length of fragments, only available with paired-end alignments)
+  
+</details><br/>
+
+
+**QUESTION**: Is the whole genome covered in the example you ran? 
+<details><summary>Click Here to see the answer</summary>
+	No, only a small subset of locations in the genome have reads aligned. This dataset only contais reads for a set of predefined regions.
+</details><br/>
+
+ 
+Many of the plots produced by Qualimap are similar to the ones produced by FastQC. There are nonetheless, figures that are specific to alignments. One important figure to look at is the **alignment rate** (percentage of the total reads that align). In this case, we want it to be as close as possible to 100%. In the case of bacterial sequencing or targeted (eg. exonic) sequencing you expect >95% successful alignment, but if sequencing a full mamallian genome (with many duplicated areas) it may be normal to have as low as 70-80% alignment success. Another alignment-specific figure is the **coverage** along the genome. The coverage on a position is the number of reads whose alignment overlap with that position. Another factor to take into account is the amount of duplicated sequences. Usually, duplication levels higher than 20% are not a good sign (they're a sign of low input DNA and PCR artifacts) but again, depends on what you are sequencing and how much. In any of these factors one has to antecipate the expected “quality” for your application.
+
+**TASK**: Open the reports example_HiSeqBGI.pdf and example_MiSeq.pdf (click on the pdf files, or use acroread). Both reports are from alignments to Escherichia coli. 
+
+**QUESTION**: What is the difference in the sequence coverage between those two files? 
+<details><summary>Click Here to see the answer</summary>
+	The HiSeq_BGI example displays a homogeneous coverage of ~110x, with a few noticeable drops (the largest one, at least probably due to a deletion, and a small region in the end that displays a coverage of ~170x (probably due to a duplication event). The MiSeq example displays a more heterogeneous coverage between 25-40x coverage, with a noticeable dip towards the end (likely to be due to a deletion).
+</details>
+<br/>
+
+**QUESTION**: What is the difference in the insert size histograms between those two files? 
+<details><summary>Click Here to see the answer</summary>
+	The HiSeq_BGI example displays a homogeneous insert size between 450-500bp. The MiSeq example displays a broad distribution of fragment lengths between 50-800bp. HiSeq_BGI is the result of a technique that fragments DNA mechanically and fragments of a given length are size-selected in a gel. On the other hand, the MiSeq example uses the Nextera library preparation kit, where the DNA is fragmented using an enzyme that immediately adds the sequencing primers.
+</details>
+<br/>
+
+**QUESTION**: Given what you saw in the two previous questions, can you think of reasons that may explain the more heterogeneous coverage of the MiSeq example (particularly the heterogeneity observed along the genome)?
+<details><summary>Click Here to see the answer</summary>
+	The lower coverage may explain a higher local variation, but not the genome-wide positional bias in coverage. Another explanation is the use of enzymatic fragmentation, which is not entirely random, but again this is unlikely to explain the positional variation. A more likely explanation is that bacteria are still in exponencial growth in the case of the MiSeq example, which would explain a greater amount of DNA fragments obtained from the region surrounding the origin of replication.
+</details>
+<br/>
+
 
 You can also directly visualize the alignments using appropriate software such as [IGV](https://www.broadinstitute.org/igv/) or [Tablet](https://ics.hutton.ac.uk/tablet/). 
 
-**TASK** In the terminal window, type 'igv'. Wait some time, and the IGV browser should appear. First, load the reference genome used for the alignment (load genome NC_000913.3_MG1655.fasta as file). You should see a chromosome of ~4.5Mb appearing, which is the genome size of Escherichia coli. Next, load the file SRR1030347.alignment.sorted.bam and/or the one you downloaded from Galaxy. You should see new tracks appearing in IGV when you load a file. Next, type in the interval window on the top this position: 'NC_000913.3:3846244-3846290'. What can you see here? Next, type 'NC_000913.3:1-1000 and NC_000913.3:4640500-4641652'. You should see colors in the reads. What do you think is the meaning of those colors? Finally, look in 'NC_000913.3:3759212-3768438'. Turn on the green light when finished.
+**TASK** In the terminal window, type 'igv'. Wait some time, and the IGV browser should appear. First, load the reference genome used for the alignment (load genome NC_000913.3_MG1655.fasta as file). You should see a chromosome of ~4.5Mb appearing, which is the genome size of Escherichia coli. Next, load the file SRR1030347.alignment.sorted.bam and/or the one you downloaded from Galaxy. You should see new tracks appearing in IGV when you load a file. 
 
-**NOTE**: Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
+**QUESTION:** Paste in the interval window on the top this position: 'Chromosome:3846244-3846290'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+	You can see an A to C SNP (Single Nucleotide Polymorphism) at position 3846267.
+	
+	![IGV SNP](images/igv_snp.png) 
+	
+</details>
+<br/>
 
+**QUESTION:** Paste in the interval window on the top this position: 'Chromosome:1-1000 and Chromosome:4640500-4641652'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+	You should see colors in the reads. What do you think is the meaning of those colors? TODO...
+</details>
+<br/>
+
+**QUESTION:** Paste in the interval window on the top this position: 'Chromosome:3759212-3768438'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+
+	TODO TODO TODO
+
+	Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
+</details>
+<br/>
+
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
 #### Detecting genetic variants
 
 After aligning reads against a reference genome, you can now see where and how the individual(s) genetic sequence differs from the reference genome. Using IGV, you have detected one mutation. To do this in a systematic way, there are specialized tools such as [GATK](https://www.broadinstitute.org/gatk/) and [freebayes](https://github.com/ekg/freebayes) that perform genotype attribution and detection of genetic variants from SAM/BAM alignment files.
 
-**TASK** In the commandline, type 'freebayes -f NC_000913.3_MG1655.fasta SRR1030347.alignment.sorted.bam > SRR1030347.alignment.vcf'. Open the resulting vcf file using a text editor or using cat in the terminal. Turn on the green light when finished.
+**TASK** In the commandline, type 'freebayes -f NC_000913.3_MG1655.fasta SRR1030347.alignment.sorted.bam > SRR1030347.alignment.vcf'. Open the resulting vcf file using a text editor or a spreadsheet.
 
-The current standard for reporting genetic variants is the variat call format ([VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf)), which is a tabular text based format, where each line contains information about one putative variant detected by the software. After inferring variants, functional annotation of variants is usually performed by specialized tools such as the Variant Effect Predictor ([VEP](http://www.ensembl.org/info/docs/tools/vep/index.html)) that take into account information on the reference genome.
+The current standard for reporting genetic variants is the variat call format ([VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf)), which is a tabular text based format, where each line contains information about one putative variant detected by the software.
+
+**QUESTION:** Are there variants in the vcf file you generated? What is the mutation with the highest confindence in the file? Note: quality is in the 4th column of the vcf file, in the Phred scale.
+<details><summary>Click Here to see the answer</summary>
+	Yes, there are several variants found, most of them with very low quality. There is only one variant with high quality (Q=2754.76), at position 3846267 (A>C). Do you recognize this mutation from before?
+</details>
+<br/>
+
+Sequencing and alignment errors cause many artefactual variants to appear. There are several filtering steps that need to be performed to minimize such errors.
+
+**TASK** In the commandline, type 'freebayes -0 -f NC_000913.3_MG1655.fasta SRR1030347.alignment.sorted.bam > SRR1030347.alignment.high_quality.vcf'. Open the resulting vcf file using a text editor or a spreadsheet.
+
+**QUESTION:** How many variants do you find now?
+<details><summary>Click Here to see the answer</summary>
+	Only the high quality variant is found now. The -0 parameter in freebayes applies common quality filters to select more confident variants.
+</details>
+<br/>
+
+After inferring trustworthy variants, their functional annotation (namely, of their impact) is usually performed by specialized tools such as the Variant Effect Predictor ([VEP](http://www.ensembl.org/info/docs/tools/vep/index.html)) that take into account information on the reference genome (namely, where are the genes).
+
+TODO TODO TODO Ver se consigo correr VEP com resultados freebayes (talvez precise mudar nome)
 
 Single nucleotide polymorphisms (SNP) are the variants that are most easily and commonly reported. Other variants pose different challenges and some are particularly difficult, such as the detection of transposable element activity. [Breseq](http://barricklab.org/twiki/bin/view/Lab/ToolsBacterialGenomeResequencing) is a software specialized in detecting several types of genomic events in short timescale evolutionary experiments in bacteria, including transposable elements. It produces user-friendly variant reports, including the functional annotation of variants that have been detected. This means it can predict not only which variants there are and where they are, but also their potential effects (in which genes, if they fall in a coding region, etc...).
 
 **TASK**: Open an example output file from breseq (index.html). Identify SNPs, deletions and movements of transposable elements. What type of evidence is required to safely detect such mutations? Turn on the green light when you're finished.
+
+TODO TODO TODO Ver explicação da JC do IS150 do breseq
 
 ### Genomics - denovo genome assembly and annotation
 
@@ -343,6 +439,15 @@ Nonetheless, this is not (and should not) be the only measure used to assess the
 The genome assembly process generates a sequence of nucleotides. Now we need to annotate the genome, namely to know where genes are and what are their possible functions. In bacteria, this is reasonably feasible, and there are already programs that allow a reasonably good quality annotation, such as [prokka](https://github.com/tseemann/prokka). In eukaryotes this process is much harder and requires multiple steps of validation.
 
 **TASK**: Open and browse an example assembly with IGV: load the reference genome 'example_assembly.fasta' and open the genome annotation 'example_assembly.prokka.gff'. How many genes where detected by prokka? Open the following files with a text editor: example_assembly.prokka.fasta and example_assembly.prokka.gbk. Turn on the green light when finished.
+
+Fazer quast do genoma obtido (talvez)?
+
+Fazer introdução ao quast_results.zip antes de os mandar aos leoes.
+
+Dar maior introdução aos datasets usados no exemplo.
+
+
+
 
 ### Transcriptomics
 
@@ -367,6 +472,8 @@ From these count files several methods can be then used to perform statistical t
 **NOTE**: Several experiments can have different numbers of reads sequenced (for the same amount of RNA). Moreover, gene length also influences the number of counts. One common normalization is to transform counts into FPKM (fragments per kb per million aligned reads). Nonetheless this measure needs to be used with caution, particularly when comparing different loci.
 
 ### MetaGenomics 
+
+Add 16S info in Slides...
 
 In MetaGenomics, we don't sequence a single individual or clone, but a community of individuals of different species, usually with the goal of identifying the species that are present, and what are their relative abundances. As you can imagine, sequencing many genomes simultaneously (each of them present at different frequencies) is a very complex task, and techniques to do it efficiently are still an area of active research. 
 
