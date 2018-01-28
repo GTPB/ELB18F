@@ -12,19 +12,20 @@
 
   - [Broadly describe the High Throughput Sequencing Workflow](#LO1)
 
-  - Interpret and Manipulate raw sequencing data
+  - [Interpret and Manipulate raw sequencing data](#LO2)
     + [The FastQ file format](#LO2.1)
     + [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
     + [Use Trimmomatic to improve the quality of data in a fastq file](#LO2.3)
 
-  - Align HTS data against a genome
+  - [Align HTS data against a genome](#LO3)
     + [Use the BWA aligner to align HTS data against a genome](#LO3.1)
     + [The SAM/BAM alignment format](#LO3.2)
 
-  - Visualize alignments
-    + [Use IGV to visualize the content of a BAM file](#LO4)
+  - [Visualize alignments](#LO4)
+    + [Use Qualimap to assess quality of alignments](#LO4.1)  
+    + [Use IGV to visualize the content of a BAM file](#LO4.2)
 
-  - Broadly describe different HTS applications
+  - [Broadly describe different HTS applications](#LO5)
     + [Variant detection in resequencing experiments](#LO5.1)
     + [Denovo genome assembly and annotation](#LO5.2)
     + [Transcriptomics using RNA-Seq](#LO5.3)
@@ -42,6 +43,8 @@ At the moment, the high throughput sequencing technology most often used (by far
 The following links are a good source of information regarding this sequencing technology:
 * [Illumina Sequencing by Synthesis](https://www.youtube.com/watch?&v=fCd6B5HRaZ8).
 * [Elaine Mardis talk on NGS](https://www.youtube.com/watch?v=v1DbcJD4Ry0).
+
+## <a id="LO2">Interpret and Manipulate raw sequencing data</a>
 
 ### <a id="LO2.1">The FastQ file format</a>
 
@@ -127,7 +130,6 @@ Other plots indicate biases in nucleotidic content of reads, either globally (su
 **QUESTION**: What information is in a FastQC report?
 <details><summary>Click Here to see the answer</summary>
 
-
 A FastQC report includes, among other things:  
 
   * Basic statistics of the fastq file, including number of reads and sequence length
@@ -174,7 +176,6 @@ Many sequencing machines can read both ends of a fragment. In this case, the mac
 The reverse read has poorer quality bases. This is usually the case, at least for illumina. This is because the reverse reads are generated after the forward reads.
 </details>
 <br/>
-
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
@@ -266,16 +267,14 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 </details>
 <br/>
 
-
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
-## Applications of HTS
 
-### Genomics - Resequencing
+## <a id="LO3">Align HTS data against a genome</a>
+
+### <a id="LO3.1">Use the BWA aligner to align HTS data against a genome</a>
 
 One of the most common applications of NGS is resequencing, where we want to genotype an individual from a species whose genome has already been assembled (a reference genome), such as the human genome, often with the goal to identify mutations that can explain a phenotype of interest.
-
-#### Alignment to a reference genome
 
 After obtaining millions of short reads, we need to align them to a (sometimes large) reference genome. To achieve this, novel, more efficient, alignment methods had to be developed. One popular method is based on the [burrows-wheeler transform](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform) and the use of efficient data structures, of which [bwa](http://bio-bwa.sourceforge.net/) and [bowtie](http://bowtie-bio.sourceforge.net/index.shtml) are examples. They enable alignment of millions of reads in a few minutes, even in a laptop.
 
@@ -284,6 +283,9 @@ After obtaining millions of short reads, we need to align them to a (sometimes l
 **TASK** The first step of a burrows-wheeler aligner is to make an index from the fasta of the reference genome. open a terminal window, go to the folder resequencing and type 'bwa index NC_000913.3_MG1655.fasta'. Now, we can do the alignment against the created database. Type 'bwa mem NC_000913.3_MG1655.fasta SRR1030347_1.fastq.interval.fq SRR1030347_2.fastq.interval.fq > SRR1030347.alignment.sam'. 
 
 **NOTE:** You may have noticed that we used paired fastq files in this alignment. The aligners can use the pairing information to improve the alignments, as we will see later.
+
+
+### <a id="LO3.2">The SAM/BAM alignment format</a>
 
 To store millions of alignments, researchers also had to develop new, more practical formats. The [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf) is a tabular text file format, where each line contains information for one alignment.
  
@@ -305,7 +307,10 @@ SAM files are most often compressed as BAM (Binary SAM) files, to reduce space. 
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
-#### Visualizing alignment results
+
+## <a id="LO4">Visualize alignments</a>
+
+### <a id="LO4.1">Use Qualimap to assess quality of alignments</a>
 
 After generating alignments and obtaining a SAM/BAM file, how do I know this step went well? The same way as FastQC generates reports of fastq files to assess quality of raw data, there are programs that generate global reports on the quality of alignments. One popular tool for this is [qualimap](http://qualimap.bioinfo.cipf.es/).
 
@@ -357,6 +362,7 @@ Many of the plots produced by Qualimap are similar to the ones produced by FastQ
 </details>
 <br/>
 
+### <a id="LO4.2">Use IGV to visualize the content of a BAM file</a>
 
 You can also directly visualize the alignments using appropriate software such as [IGV](https://www.broadinstitute.org/igv/) or [Tablet](https://ics.hutton.ac.uk/tablet/). 
 
@@ -366,6 +372,7 @@ You can also directly visualize the alignments using appropriate software such a
 <details><summary>Click Here to see the answer</summary>
 	You can see an A to C SNP (Single Nucleotide Polymorphism) at position 3846267.
 	
+	 <img src="images/igv_snp.png" alt="IGV SNP"> 
 	![IGV SNP](images/igv_snp.png) 
 	
 </details>
@@ -382,16 +389,15 @@ You can also directly visualize the alignments using appropriate software such a
 
 **QUESTION:** Paste in the interval window on the top this position: 'Chromosome:3759212-3768438'. What can you see? 
 <details><summary>Click Here to see the answer</summary>
-
-	TODO TODO TODO
-
-	Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
+	You can see two regions where the reads are marked in white, both with slightly less coverage than the remaining regions marked in gray. The reads marked in white have a mapping quality of Q=0, which means the aligner does not know where these reads actually belong to. Most genomes (particularly mamallian genomes) contain areas of low complexity, composed mostly of repetitive sequences. In the case of short reads, sometimes these align to multiple regions in the genome equally well, making it impossible to know where the fragment came from. Longer reads are needed to overcome these difficulties, or in the absence of these, paired-end data can also be used. Some aligners (such as bwa) can use information on paired reads to help disambiguate some alignments. Information on paired reads is also added to the SAM file when proper aligners are used.
 </details>
 <br/>
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
-#### Detecting genetic variants
+## <a id="LO5">Broadly describe different HTS applications</a>
+
+### <a id="LO5.1">Variant detection in resequencing experiments</a>
 
 After aligning reads against a reference genome, you can now see where and how the individual(s) genetic sequence differs from the reference genome. Using IGV, you have detected one mutation. To do this in a systematic way, there are specialized tools such as [GATK](https://www.broadinstitute.org/gatk/) and [freebayes](https://github.com/ekg/freebayes) that perform genotype attribution and detection of genetic variants from SAM/BAM alignment files.
 
@@ -425,7 +431,9 @@ Single nucleotide polymorphisms (SNP) are the variants that are most easily and 
 
 TODO TODO TODO Ver explicação da JC do IS150 do breseq
 
-### Genomics - denovo genome assembly and annotation
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+### <a id="LO5.2">Denovo genome assembly and annotation</a>
 
 Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble these millions of reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
 
@@ -449,10 +457,9 @@ Fazer introdução ao quast_results.zip antes de os mandar aos leoes.
 
 Dar maior introdução aos datasets usados no exemplo.
 
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
-
-
-### Transcriptomics
+### <a id="LO5.3">Transcriptomics using RNA-Seq</a>
 
 Another very common application of NGS is to sample the transcriptome, much like gene expression microarrays. The main advantages of RNA Sequencing versus microarrays is a better signal-to-noise ratio and the ability to detect novel transcripts (something impossible with microarrays). Data processing is similar to genomic resequencing, although mRNA is usually spliced (in eukaryotes at least), and thus we need to use splice-aware aligners such as [Tophat](https://ccb.jhu.edu/software/tophat/index.shtml) and its successor [Hisat](http://ccb.jhu.edu/software/hisat2/index.shtml) to map short transcriptomic reads to a reference genome. These aligners are based on the burrows-wheeler aligners we discussed previously, but with extensions to deal with the possibility of spliced reads. Hisat was specifically designed to handle RNA-Seq data.
 
@@ -474,7 +481,9 @@ From these count files several methods can be then used to perform statistical t
 
 **NOTE**: Several experiments can have different numbers of reads sequenced (for the same amount of RNA). Moreover, gene length also influences the number of counts. One common normalization is to transform counts into FPKM (fragments per kb per million aligned reads). Nonetheless this measure needs to be used with caution, particularly when comparing different loci.
 
-### MetaGenomics 
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+### <a id="LO5.4">16S Metagenomics</a>
 
 Add 16S info in Slides...
 
@@ -490,7 +499,9 @@ Since there are potentially many species not yet sequenced (particularly since m
 
 **TASK**: The beta diversity measures a distance in diversity between samples or group of samples (how different are the communities). One way of visualizing those distances is through Principal Components plots. Press on the PCoA plot (unweighted Unifrac). Do you see clusters of samples forming? Group significance tests which OTUs are significantly present in a group versus another (much like RNA-Seq differential gene expression). Which groups of OTUs are differentially present in untreated versus streptomycin treated? Does it agree with what you saw before? Turn on the green light when you're finished.
 
-### Epigenomics
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+### <a id="LO5.5">Epigenomics</a>
 
 NGS can also be used to sequence specific regions of interest in the genome. An example of this are regions bound by transcription factors (TF). Using antibodies specific for a TF, the bound DNA can be selectively extracted and sequenced. In this case, we are interested in knowing which areas of the genome are enriched in sequenced reads (loci bound by the TF). This technique is called ChIP-Seq (chromatin IP followed by sequencing).
 
@@ -499,3 +510,5 @@ NGS can also be used to sequence specific regions of interest in the genome. An 
 Most often the term epigenetics is associated to DNA methylation. One popular technique to assess methylation is reduced representation bisulfite sequencing (RRBS), where GC-rich DNA is obtained and subjected to bisulfite treatment that converts unmethylated cytosines to uracil. After aligning the reads sequenced  after bisulfite treatment with the reference genome, we can have an estimate of the percentage of methylation in those bases.
 
 **TASK**: Look at an example of RRBS 'ENCODE_example_BSSeq.bed' (open with a text editor, or use cat in the terminal). The last two columns tell you the coverage and percentage of methylated bases relative to total bases sequenced at that position.
+
+**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
