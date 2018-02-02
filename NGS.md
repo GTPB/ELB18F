@@ -12,9 +12,9 @@
 
   - [Broadly describe the High Throughput Sequencing Workflow](#LO1)
 
-  - [Interpret and Manipulate raw sequencing data](#LO2)
-    + [The FastQ file format](#LO2.1)
-    + [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
+  1. [Interpret and Manipulate raw sequencing data](#LO2)
+    1.1. [The FastQ file format](#LO2.1)
+    1.2.+ [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
     + [Use Trimmomatic to improve the quality of data in a fastq file](#LO2.3)
 
   - [Align HTS data against a genome](#LO3)
@@ -32,6 +32,8 @@
     + [16S Metagenomics](#LO5.4)
     + [Epigenetics](#LO5.5)
 
+**NOTE**: At the end of each of the sections regarding particular learning outcomes, we will ask you how confident you feel about having achieved that specific learning outcome. Therefore, to synchronize everyone, we will ask you to turn on the green light you have in your workstation once you've finished doing all the activities for that section. Don't hesitate to ask questions and to turn on the red light if you're having issues at any point while you're performing the activities.	
+	
 ## <a id="LO1">The High Throughput Sequencing Workflow</a>
 
 [Sanger sequencing](https://en.wikipedia.org/wiki/Sanger_sequencing) brought about a technological revolution, as it allowed to directly read DNA molecules with relative ease and affordability. The [Human Genome Project](https://en.wikipedia.org/wiki/Human_Genome_Project) motivated further progress, leading to automated DNA-sequencing machines capable of sequencing up to 384 samples in a single batch using capillary electrophoresis. 
