@@ -14,23 +14,23 @@
 
   - [**2**: Interpret and Manipulate raw sequencing data](#LO2)
     + [**2.1**: The FastQ file format](#LO2.1)
-    + [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
-    + [Use Trimmomatic to improve the quality of data in a fastq file](#LO2.3)
+    + [**2.2**: Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
+    + [**2.3**: Use Trimmomatic to improve the quality of data in a fastq file](#LO2.3)
 
-  - [Align HTS data against a genome](#LO3)
-    + [Use the BWA aligner to align HTS data against a genome](#LO3.1)
-    + [The SAM/BAM alignment format](#LO3.2)
+  - [**3**: Align HTS data against a genome](#LO3)
+    + [**3.1**: Use the BWA aligner to align HTS data against a genome](#LO3.1)
+    + [**3.2**: The SAM/BAM alignment format](#LO3.2)
 
-  - [Visualize alignments](#LO4)
-    + [Use Qualimap to assess quality of alignments](#LO4.1)  
-    + [Use IGV to visualize the content of a BAM file](#LO4.2)
+  - [**4**: Visualize alignments](#LO4)
+    + [**4.1**: Use Qualimap to assess quality of alignments](#LO4.1)  
+    + [**4.2**:Use IGV to visualize the content of a BAM file](#LO4.2)
 
-  - [Broadly describe different HTS applications](#LO5)
-    + [Variant detection in resequencing experiments](#LO5.1)
-    + [Denovo genome assembly and annotation](#LO5.2)
-    + [Transcriptomics using RNA-Seq](#LO5.3)
-    + [16S Metagenomics](#LO5.4)
-    + [Epigenetics](#LO5.5)
+  - [**5**: Broadly describe different HTS applications](#LO5)
+    + [**5.1**: Variant detection in resequencing experiments](#LO5.1)
+    + [**5.2**: Denovo genome assembly and annotation](#LO5.2)
+    + [**5.3**: Transcriptomics using RNA-Seq](#LO5.3)
+    + [**5.4**: 16S Metagenomics](#LO5.4)
+    + [**5.5**: Epigenetics](#LO5.5)
 
 **NOTE**: At the end of each of the sections regarding particular learning outcomes, we will ask you how confident you feel about having achieved that specific learning outcome. Therefore, to synchronize everyone, we will ask you to turn on the green light you have in your workstation once you've finished doing all the activities for that section. Don't hesitate to ask questions and to turn on the red light if you're having issues at any point while you're performing the activities.	
 	
@@ -45,6 +45,23 @@ At the moment, the high throughput sequencing technology most often used (by far
 The following links are a good source of information regarding this sequencing technology:
 * [Illumina Sequencing by Synthesis](https://www.youtube.com/watch?&v=fCd6B5HRaZ8).
 * [Elaine Mardis talk on NGS](https://www.youtube.com/watch?v=v1DbcJD4Ry0).
+
+**QUESTION**: Can you broadly describe commmon steps in most high throughput sequencing workflows?
+<details><summary>Click Here to see the answer</summary><p>
+
+  * Extraction and purification of the DNA template (even RNA must usually be converted to cDNA)
+  
+  * Fragmentation of the DNA template (into a size range that can be accommodated by the machine)
+  
+  * Attachment of sequencing tags (to enable reading by the machine)
+  
+  * Amplification of signal (usually trough PCR, often already in the machine)
+  
+  * Reading of signal and conversion into nucleotide bases
+  
+</p></details>
+
+
 
 ## <a id="LO2">Interpret and Manipulate raw sequencing data</a>
 
@@ -116,7 +133,21 @@ P(correct)=(0.99)^100 ~= 36.6%!
 This serves to exemplify that most reads in current sequencing machines are likely to have at least one base incorrect.
 </p></details>
 
+Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files old_illumina_paired_1 (containing the forward reads) and old_illumina_paired_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
+
+![Adaptor](images/paired-end.jpg)
+
+**QUESTION**: Uncompress and open the fastq files in paired_end_example_1.fastq.gz and paired_end_example_2.fastq.gz. Can you see a relationship betweem the reads in both files?
+<details><summary>Click Here to see the answer</summary><p>
+The read identifiers are the same, in the same order (though the sequences are not). This is because they are readings of the same fragment, one (_1) in the forward and another (_2) in the reverse direction. Often the indication of forward and reverse is in the identifier itself.
+</p></details>
+
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+**QUESTION**: How well do you understand the content of a fastQ file?
+
+**QUESTION**: Did you understand the difference between single-end and paired-end reads?
+
 
 ### <a id="LO2.2">Quality Check of FastQ data</a>
 
@@ -176,17 +207,20 @@ Illumina machines generate shorter reads, all with the same length. Pacbio and n
 <br/>
 
 
-Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files old_illumina_paired_1 (containing the forward reads) and old_illumina_paired_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
-
-![Adaptor](images/paired-end.jpg)
-
 **QUESTION**: What is the major difference between the two paired fastq files of the paired_example?
 <details><summary>Click Here to see the answer</summary>
 The reverse read has poorer quality bases. This is usually the case, at least for illumina. This is because the reverse reads are generated after the forward reads.
 </details>
 <br/>
 
+
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+**QUESTION**: Could you run FastQC on a fastq file?
+
+**QUESTION**: Can you broadly list types of information that a FastQC report contains?
+
+**QUESTION**: Can you interpret information in a FastQC report to detect potential issues with data in a fastq file?
 
 
 ### <a id="LO2.3">Filtering and Trimming</a>
@@ -278,6 +312,20 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
+**QUESTION**: Could you manually remove low quality bases from the end of a read in the fastq format? 
+
+**QUESTION**: Did you broadly understand the challenges of removing bad quality bases from reads? 
+
+**QUESTION**: Could you use seqtk to remove low quality bases from the end of reads in a fastq file? 
+
+**QUESTION**: Did you broadly understand the challenges of removing adaptors from reads? 
+
+**QUESTION**: Could you use cutadapt to remove adaptors from reads in a fastq file? 
+
+**QUESTION**: Could you use trimmomatic to remove bad quality bases and remove adaptors from reads in a fastq file? 
+
+**QUESTION**: Did you understand the issue of manipulating paired-end fastq files? 
+
 
 ## <a id="LO3">Align HTS data against a genome</a>
 
@@ -315,6 +363,16 @@ SAM files are most often compressed as BAM (Binary SAM) files, to reduce space. 
 **TASK** Let's do the whole process using galaxy. Upload the reference genome and the paired fastq files into Galaxy. Check their quality and perform any necessary filtering using trimmomatic or with any of the tools we saw before. Next, perform an alignment with bwa mem of the paired reads (you need to select the option of paired reads) against the reference genome (choose one from history). Next, download the bam file that was created. Also download the companion bai index file (you need to press on the download icon to have the option to download the bam and the bai files). 
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+
+**QUESTION**: Did you broadly understand the challenges of aligning millions of short reads to a genome? 
+
+**QUESTION**: Did you broadly understand the assumptions underlying the use of burrows-wheeler aligners?
+
+**QUESTION**: Could you use bwa to align reads to a reference genome? 
+
+**QUESTION**: Do you know what is the most common alignment format these aligners use? 
+
+**QUESTION**: Do you broadly understand the contents of a SAM/BAM file and the difference between SAM and BAM? 
 
 
 ## <a id="LO4">Visualize alignments</a>
