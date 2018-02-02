@@ -10,11 +10,11 @@
  
 ## Learning Outcomes:
 
-  - [Broadly describe the High Throughput Sequencing Workflow](#LO1)
+  - [**1**: Broadly describe the High Throughput Sequencing Workflow](#LO1)
 
-  1. [Interpret and Manipulate raw sequencing data](#LO2)
-    1.1. [The FastQ file format](#LO2.1)
-    1.2.+ [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
+  - [**2**: Interpret and Manipulate raw sequencing data](#LO2)
+    + [**2.1**: The FastQ file format](#LO2.1)
+    + [Use FastQC to analyse the quality of data in a fastq file](#LO2.2)
     + [Use Trimmomatic to improve the quality of data in a fastq file](#LO2.3)
 
   - [Align HTS data against a genome](#LO3)
