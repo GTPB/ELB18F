@@ -62,7 +62,6 @@ The following links are a good source of information regarding this sequencing t
 </p></details>
 
 
-
 ## <a id="LO2">Interpret and Manipulate raw sequencing data</a>
 
 ### <a id="LO2.1">The FastQ file format</a>
@@ -142,9 +141,11 @@ Many sequencing machines can read both ends of a fragment. In this case, the mac
 The read identifiers are the same, in the same order (though the sequences are not). This is because they are readings of the same fragment, one (_1) in the forward and another (_2) in the reverse direction. Often the indication of forward and reverse is in the identifier itself.
 </p></details>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 **QUESTION**: How well do you understand the content of a fastQ file?
+
+**QUESTION**: Can you manually calculate the probability of error associated to any given base in a fastq file?
 
 **QUESTION**: Did you understand the difference between single-end and paired-end reads?
 
@@ -214,7 +215,7 @@ The reverse read has poorer quality bases. This is usually the case, at least fo
 <br/>
 
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 **QUESTION**: Could you run FastQC on a fastq file?
 
@@ -310,7 +311,7 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 </details>
 <br/>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 **QUESTION**: Could you manually remove low quality bases from the end of a read in the fastq format? 
 
@@ -362,7 +363,7 @@ SAM files are most often compressed as BAM (Binary SAM) files, to reduce space. 
 
 **TASK** Let's do the whole process using galaxy. Upload the reference genome and the paired fastq files into Galaxy. Check their quality and perform any necessary filtering using trimmomatic or with any of the tools we saw before. Next, perform an alignment with bwa mem of the paired reads (you need to select the option of paired reads) against the reference genome (choose one from history). Next, download the bam file that was created. Also download the companion bai index file (you need to press on the download icon to have the option to download the bam and the bai files). 
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 **QUESTION**: Did you broadly understand the challenges of aligning millions of short reads to a genome? 
 
@@ -462,7 +463,7 @@ You can see two regions where the reads are marked in white, both with slightly 
 </details>
 <br/>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 **QUESTION**: Did you broadly understand the different aspects to consider when evaluating the quality of your alignments?
 
@@ -527,11 +528,24 @@ In the bottom of the page we can see unassigned missing coverage and junction ev
 </details>
 <br/>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+
+**QUESTION**: Did you broadly understand the process of finding variants from alignments?
+
+**QUESTION**: Could you use freebayes to infer variants?
+
+**QUESTION**: Did you broadly understand the content of a VCF file?
+
+**QUESTION**: Did you broadly understand the process of inferring the effect of a variant?
+
+**QUESTION**: Could you use the VEP online tool to infer the effect of variations in a VCF file?
+
+**QUESTION**: Did you broadly understand the output of breseq and the challenge of finding different types of vriants?
+
 
 ### <a id="LO5.2">Denovo genome assembly and annotation</a>
 
-Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble these millions of reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
+Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble millions of short reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
 
 **TASK**: In the terminal, type 'spades.py -1 SRR1030347_1.fastq.interval.fq -2 SRR1030347_2.fastq.interval.fq  -o SRR1030347_spades'. After spades finishing successfully, there should be a folder SRR1030347_spades. Inside the folder you should have a scaffolds.fasta file.
 
@@ -590,13 +604,30 @@ The genome assembly process generates a sequence of nucleotides in the form of a
 
 **NOTE:** Annotating a genome allow us to use other measures to infer the quality of our assembly. Namely, we usually prefer assemblies where we can annotate more genes (assemblies that are too fragmented, or with incorrect sequence, have less annotated genes). One particular test relates to genes that are present in all species, where we prefer assemblies where we can detect as many of these genes as possible.
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+
+**QUESTION**: Did you broadly understand the process of genome assembly?
+
+**QUESTION**: Could you use spades to assemble contigs from short reads?
+
+**QUESTION**: Did you broadly understand different factors affecting the genome assembly process?
+
+**QUESTION**: Can you list different measures to asess the quality of a genome?
+
+**QUESTION**: Did you broadly understand the output of Quast to compare different assemblies?
+
+**QUESTION**: Did you broadly understand the process of genome annotation?
+
 
 ### <a id="LO5.3">Transcriptomics using RNA-Seq</a>
 
 Another very common application of NGS is to sample the transcriptome, much like gene expression microarrays. The main advantages of RNA Sequencing versus microarrays is a better signal-to-noise ratio and the ability to detect novel transcripts (something impossible with microarrays). Data processing is similar to genomic resequencing, although mRNA is usually spliced (in eukaryotes at least), and thus we need to use splice-aware aligners such as [Tophat](https://ccb.jhu.edu/software/tophat/index.shtml) and its successor [Hisat](http://ccb.jhu.edu/software/hisat2/index.shtml) to map short transcriptomic reads to a reference genome. These aligners are based on the burrows-wheeler aligners we discussed previously, but with extensions to deal with the possibility of spliced reads. Hisat was specifically designed to handle RNA-Seq data.
 
-**TASK** Get the files from [here](https://github.com/dsobral/ADER17S/tree/master/material/guilgur). This contains data extracted from [Guilgur et al, 2014](https://elifesciences.org/content/3/e02181). In this Drosophila melanogaster dataset, we have two conditions (WT and mut), with two replicates for each (note that nowadays, it is more common to use 3 or more replicates). To make it quick to run, we have extracted data for a very limited set of genes. Next, obtain genomic fasta for Drosophila melanogaster from the Ensembl website: click on the Downloads tab on the top, then on Download data via FTP, finally search for Drosophila melanogaster and click on the fasta link for DNA data. Get the toplevel, non-masked compressed fasta file. Decompress the file. 
+For this practical session, we will use data extracted from [Guilgur et al, 2014](https://elifesciences.org/content/3/e02181). In this Drosophila melanogaster dataset, we have two conditions, one control wild type (WT) and a mutant in the fandango gene (mut), with two replicates for each. To make it quick to run, we have extracted data for a very limited set of genes.
+
+**NOTE**: Nowadays, it is more common to use 3 or more replicates for each condition. 
+
+**TASK** Get the sequencing files from [here](https://github.com/dsobral/ADER17S/tree/master/material/guilgur).  Next, obtain genomic fasta for Drosophila melanogaster from the [Ensembl website](http://www.ensembl.org): click on the Downloads tab on the top, then on Download data via FTP, finally search for Drosophila melanogaster and click on the fasta link for DNA data. Get the toplevel, non-masked compressed fasta file. Decompress the file. 
 
 **TASK**: Upload all the files into Galaxy. Align the reads against the Drosophila genome using Hisat2 in Galaxy (note: the fastq data is already of good quality). Use the inbuilt genome to avoid the indexing step. Optionally, you can also align using the genome you downloaded to see the difference in time it takes. Finally, download all the BAM files (don't forget to download all the companion index bai files also).
 
