@@ -757,13 +757,47 @@ Another simpler approach to do this is to sequence a single common locus with su
 
 Since there are potentially many species not yet sequenced (particularly since most bacteria are unculturable), one may lose a lot of information if only trying to match a reference database. These programs also give the possibility of clustering some (or all) of the input sequences into Operational Taxonomical Units (OTU), which roughly translate into different species (usually an OTU is defined as a cluster of sequences with more than 97% similarity), thereby avoiding the possible gaps in the reference databases.
 
-**TASK**: Unzip the file QIIME_core_diversity_report.zip. This contains the result of applying qiime into a dataset derived from [Batista et al. (2015)]. This data contais high-throughput 16S rRNA gene sequencing data of DNA extracted from faecal samples from two timepoints of a bacterial evolution experiment (day 0 and day 3) of wild-type mice where the mice from day 3 of experiment were treated with Streptomycin and subsequently colonized with Escherichia coli. Open the html file insie the folder you just extracted. If you click on the bar charts, you will see the species present in each sample and their relative frequency. What is the major difference between the untreated samples and the ones subjected to streptomycin? Turn on the green light when you're finished.
+**TASK**: Unzip the file QIIME_core_diversity_report.zip. This contains the result of applying qiime into a dataset derived from [Batista et al. (2015)](https://www.nature.com/articles/ncomms9945). This data contais high-throughput 16S rRNA gene sequencing data of DNA extracted from faecal samples from two timepoints of a bacterial evolution experiment (day 0 and day 3) of wild-type mice where the mice from day 3 of experiment were treated with Streptomycin and subsequently colonized with Escherichia coli. Open the html file inside the folder you just extracted. 
 
-**TASK**: The alpha diversity measures species diversity within one sample or group of samples. Select the Alpha rarefaction plots, and see different metrics related to Antibiotic Usage. Also open the Alpha Diversity Boxplots. How do you interpret what do you see? Turn on the green light when you're finished.
 
-**TASK**: The beta diversity measures a distance in diversity between samples or group of samples (how different are the communities). One way of visualizing those distances is through Principal Components plots. Press on the PCoA plot (unweighted Unifrac). Do you see clusters of samples forming? Group significance tests which OTUs are significantly present in a group versus another (much like RNA-Seq differential gene expression). Which groups of OTUs are differentially present in untreated versus streptomycin treated? Does it agree with what you saw before? Turn on the green light when you're finished.
+**QUESTION:** Click on the link for the bar charts in the Taxonomic summary results (by Antibiotic Usage). What is the major difference between the untreated samples and the ones subjected to streptomycin?
+<details><summary>Click Here to see the answer</summary>
+The antibiotic removed most of the firmicute species, which were replaced by the Escherichia coli that was artificially inserted.
+</details>
+<br/>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**QUESTION:** Click on the link for the rarefaction plots in the Alpha Diversity Results. Select different Metrics for the Category AntibioticUsage. What is the difference between the untreated samples and the ones subjected to streptomycin?
+<details><summary>Click Here to see the answer</summary>
+The antibiotic treated samples have much lower diversity (less bacterial taxa) than the untreated samples.
+</details>
+<br/>
+
+**QUESTION:** Click on the link for the rarefaction plots in the Alpha Diversity Results. Select different Metrics for the Category AntibioticUsage. What is the difference between the untreated samples and the ones subjected to streptomycin?
+<details><summary>Click Here to see the answer</summary>
+The antibiotic treated samples have much lower diversity (less bacterial taxa) than the untreated samples.
+</details>
+<br/>
+
+**QUESTION**: Click on the link for the PCoA plot (unweighted Unifrac) in the Beta Diversity results. Do you see clusters of samples forming? 
+<details><summary>Click Here to see the answer</summary>
+The antibiotic treated samples separate well from the untreated samples.
+</details>
+<br/>
+
+**QUESTION**: Click on the link for the Category Significance (AntibioticUsage). Which groups of OTUs are differentially present in untreated versus streptomycin treated (FDR<0.05)? Does it agree with what you saw before? 
+<details><summary>Click Here to see the answer</summary>
+Group significance tests which OTUs are significantly present in a group versus another (much like RNA-Seq differential gene expression). Many firmicute taxa are differentially present between the two groups, as well as Escherichia. This agrees with what we say before in the barplots.
+</details>
+<br/>
+
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+
+**QUESTION**: Did you broadly understand the process of 16S metagenomics data analysis?
+
+**QUESTION**: Did you broadly understand the concept of alpha diversity (total diversity)?
+
+**QUESTION**: Did you broadly understand the concept of beta diversity (comparative diversity)?
+
 
 ### <a id="LO5.5">Epigenomics</a>
 
