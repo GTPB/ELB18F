@@ -661,28 +661,93 @@ Gene Act5c is very highly expressed in all samples.
 
 **QUESTION:** In the gene Act5c samples the IGV plot seems more similar with regards to replicate than the genotype. What can be causing this? 
 <details><summary>Click Here to see the answer</summary>
-The gene Act5c is a ubiquitously expressed gene, so it is not differentially expressed between the two groups. Nonetheless, we can see that the distribution of reads is not entirely random, which is particularly noticeable in the samples for the second replicates, where reads tend to fall close to the end of the transcript. This RNA was purified using a process  captures the poly-A tails. An accumulation of RNA towards the end of the transcripts is probably due to a higher degradation of the RNA material when processing the samples for the second replicates (which were processed at a different time than the first replicates). This type of differences between replicates are also known as **batch effects**.
+The gene Act5c is a ubiquitously expressed gene, so it is not differentially expressed between the two groups. Nonetheless, we can see that the distribution of reads is not entirely random, which is particularly noticeable in the samples for the second replicates, where reads tend to fall close to the end of the transcript. This RNA was purified using a process  captures the poly-A tails. An accumulation of RNA towards the end of the transcripts is probably due to a higher degradation of the RNA material when processing the samples for the second replicates (which were processed at a different time than the first replicates). This type of differences between replicates are also known as batch effects.
 </details>
 <br/>
 
 
-**QUESTION:** Would you be able to detect all of what you saw here using microarrays? If not, what and why?
+**QUESTION:** Would you be able to detect all of what you saw here using microarrays?
 <details><summary>Click Here to see the answer</summary>
-With microarrays, you would be able to detect that the gene Rpn12R is differentially expressed, or that the gene Act5c is highly expressed. Nonetheless, you would not be able to look for variants, and you would not be able to see that the gene Run has splicing problems. You also cannot look for genes (or alternative transcripts) that were not pre-specified in the array you used. Moreover, you would not be identify potential batch issues like what we noticed with gene Act5c.
+With microarrays, you would be able to detect that the gene Rpn12R is differentially expressed, or that the gene Act5c is highly expressed. Nonetheless, you would not be able to look for variants, and you would not be able to see that the gene Run has splicing problems. You also cannot look for genes (or alternative transcripts) that were not pre-specified in the array you used. Moreover, you would not be able to identify potential batch issues like what we noticed in the last example of gene Act5c.
 </details>
 <br/>
 
-To perform differential expression analysis, one needs to count how many times a different transcript/gene is read. Popular tools to generate these counts from a SAM/BAM file include [htseq-count](http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html) and [featurecounts](http://bioinf.wehi.edu.au/featureCounts/).
+We could see in IGC that gene Rpn12R is differentially expressed between the two groups. But like in the case of variant detection, we need to use specialized software to systematically detect differentially expressed genes. To perform differential expression analysis, one needs to count how many times a different transcript/gene is read. Popular tools to generate these counts from a SAM/BAM file include [htseq-count](http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html) and [featurecounts](http://bioinf.wehi.edu.au/featureCounts/).
 
-**TASK**: In Galaxy, use htseq-counts to generate tables of counts for each sample. Use the generated BAM files, and the provided sample gtf file. Put stranded as 'No', and leave the rest as the default. Then press execute.
+**TASK**: In Galaxy, use the tool htseq-counts to generate tables of counts for each sample. Use the generated BAM files, and the provided sample gtf file as inputs. Put stranded as 'No', and leave the rest as the default. Then press execute.
+
+**QUESTION:** How many counts has the gene Rpn12R (FBgn0036465) in the differente samples?
+<details><summary>Click Here to see the answer</summary>
+The gene FBgn0036465 has 0 counts in WT_lib1, 1 in WT_lib2, 219 in mut_lib1 and 263 in mut_lib2.
+</details>
+<br/>
+
+**QUESTION:** You probably noticed the existence of a "no feature" table. What do you think is reported there?
+<details><summary>Click Here to see the answer</summary>
+The "no feature" table reports reads that were not assigned to genes, whether because they did not align, or they align in repetitive areas (not unique), because they not overlap a gene, or the software could not decide to which gene it belongs to (ambiguous).  
+</details>
+<br/>
+
 
 From these count files several methods can be then used to perform statistical tests. Given that sequencing data is based on discrete counts, most of the popular methods are based on derivations of the binomial distribution. Similarly to microarrays, there are many available tools to perform these analysis using the [R language](https://www.r-project.org/about.html) (such as [edger](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [DESeq](http://bioconductor.org/packages/release/bioc/html/DESeq.html)).
 
-**TASK**: Use DESeq2 in Galaxy to calculate differential gene expression. As factor use "Genotype", as factor level 1 use "mut", and as count files the 2 mut count tables generated before. As factor level 2 use WT and as count files the 2 WT count tables. Leave the rest as default and execute. Turn on the green light when finished.
+**TASK**: Use DESeq2 in Galaxy to calculate differential gene expression from the counts you generated. As factor use "Genotype", as factor level 1 use "mut", and as count files the 2 mut count tables generated before (the ones with the gene counts, not the "no feature" tables). As factor level 2 use WT and as count files the 2 WT count tables. Leave the rest as default and execute. 
 
-**NOTE**: Several experiments can have different numbers of reads sequenced (for the same amount of RNA). Moreover, gene length also influences the number of counts. One common normalization is to transform counts into FPKM (fragments per kb per million aligned reads). Nonetheless this measure needs to be used with caution, particularly when comparing different loci.
+**QUESTION:** How many genes were detected to be differentially expressed (padj<0.05)?
+<details><summary>Click Here to see the answer</summary>
+Only the gene FBgn0036465 (Rpn12R). The gene FBgn0003300 (run), despite having a bit more expression in the mutant, is not considered to be significantly differentially expressed.
+</details>
+<br/>
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**QUESTION:** What information is in the DESeq2 result table?
+<details><summary>Click Here to see the answer</summary>
+
+	* GeneID (The identifier of the gene - in this case the Flybase identifier)
+	
+	* Base Mean (The mean normalized counts of all the samples - a measure of how much is a gene expressed)
+	
+	* log2(FC) - log2 of the Fold Change (when positive, more expressed in one group than the other, and the reverse when negative)
+	
+	* StdErr - a measure of the confidence in the true value of the estimated log2(FC)
+	
+	* Wald-Stats - A value measuring how far is the observed log2(FC) from the 0 taking the StdErr into account.
+	
+	* P-value - A value measure how likely it is to obtain the observed log2(FC) by chance.
+	
+	* P-adj - The P-value corrected for multiple testing (the value that should be used in the end)
+	
+</details>
+<br/>
+
+**QUESTION:** What information is in the DESeq2 plots?
+<details><summary>Click Here to see the answer</summary>
+
+	* PcA plot: Displays the samples through a projection that most explain the variation between samples.
+	
+	* Sample-to-Sample Distances: Like the previous plot, it displays how similar are the samples between each other.
+	
+	* Dispersion estimates - A plot displaying the approximations DESeq2 does to estimate the true log2(FC)
+	
+	* Histogram of P-values - As the name implies, it depicts the distribution of P-values for all genes.
+	
+	* MA-plot - plots the M (fold change) against the A (total expression) for all genes
+	
+	In this case, since there were only 8 genes, the plots displaying gene information were basically empty.
+	
+</details>
+<br/>
+
+
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+
+**QUESTION**: Could you use Hisat to align RNA-Seq reads against a reference genome?
+
+**QUESTION**: Could you use htseq-counts to generate gene counts from alignments and a reference annotation?
+
+**QUESTION**: Could you use DESeq2 to obtain differentially expressed genes?
+
+**QUESTION**: Did you broadly understand the process of differential gene expression analysis?
+
 
 ### <a id="LO5.4">16S Metagenomics</a>
 
