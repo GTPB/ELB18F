@@ -627,13 +627,50 @@ For this practical session, we will use data extracted from [Guilgur et al, 2014
 
 **NOTE**: Nowadays, it is more common to use 3 or more replicates for each condition. 
 
-**TASK** Get the sequencing files from [here](https://github.com/dsobral/ADER17S/tree/master/material/guilgur).  Next, obtain genomic fasta for Drosophila melanogaster from the [Ensembl website](http://www.ensembl.org): click on the Downloads tab on the top, then on Download data via FTP, finally search for Drosophila melanogaster and click on the fasta link for DNA data. Get the toplevel, non-masked compressed fasta file. Decompress the file. 
+**TASK**: Upload all the files in the transcriptomics folder into Galaxy. Align the reads in the fastq files against the inbuilt Drosophila genome using Hisat2 in Galaxy (note: the fastq data is already of good quality). Use the inbuilt genome to avoid the indexing step. Optionally, you can also align using the genome you downloaded to see the difference in the time it takes. Finally, download all the BAM files you obtained in Galaxy, as well as their companion index bai files.
 
-**TASK**: Upload all the files into Galaxy. Align the reads against the Drosophila genome using Hisat2 in Galaxy (note: the fastq data is already of good quality). Use the inbuilt genome to avoid the indexing step. Optionally, you can also align using the genome you downloaded to see the difference in time it takes. Finally, download all the BAM files (don't forget to download all the companion index bai files also).
+**TASK**: In IGV, load as genome the Drosophila melanogaster fasta in the transcriptomics folder. Next, load the BAM files for all the RNA samples. Finally, load the provided sample gtf file (not as genome).
 
-**TASK**: In IGV, load as genome the Drosophila melanogaster fasta you downloaded previously. Also load the provided sample gtf file. Finally, load the BAM files for all the RNA samples. In IGV, look at position: 3L:15041314-15044195 (alternatively, look for the gene Rpn12R, or Fbgn0036465). What can you see? Next, look at position: X:20689286-20698941 (gene run, or FBgn0003300). What can you see? Finally, look at position: X:5898729-5908384 (gene Act5c, or FBgn0000042). What can you see (notice, in particular, the gene converage)? Turn on the green light when finished.
+**QUESTION:** Paste in the interval window on the top this position: 3L:15041314-15044195'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+The gene Rpnr12r (Fbgn0036465) is expressed in the mutant samples, but not in the wild type samples.
+	
+![IGV SV](images/rpnr12r.jpg) 
+	
+</details>
+<br/>
 
-**Question**: Would you be able to detect all of what you saw here using microarrays? If not, what and why?
+**QUESTION:** Paste in the interval window on the top this position: X:20693985-20697646'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+The gene Run (FBgn0003300) is  slightly more expressed in the mutant samples. But the most noticeable difference is that the gene is poorly spliced in the mutant samples. This mutant affects a component of the spliceosome, and thus some of the genes are not spliced correctly, like this gene.
+	
+![IGV SV](images/run.jpg) 
+	
+</details>
+<br/>
+
+
+**QUESTION:** Paste in the interval window on the top this position: X:5900729-5904706'. What can you see? 
+<details><summary>Click Here to see the answer</summary>
+Gene Act5c is very highly expressed in all samples.
+	
+![IGV SV](images/act5c.jpg) 
+	
+</details>
+<br/>
+
+**QUESTION:** In the gene Act5c samples the IGV plot seems more similar with regards to replicate than the genotype. What can be causing this? 
+<details><summary>Click Here to see the answer</summary>
+The gene Act5c is a ubiquitously expressed gene, so it is not differentially expressed between the two groups. Nonetheless, we can see that the distribution of reads is not entirely random, which is particularly noticeable in the samples for the second replicates, where reads tend to fall close to the end of the transcript. This RNA was purified using a process  captures the poly-A tails. An accumulation of RNA towards the end of the transcripts is probably due to a higher degradation of the RNA material when processing the samples for the second replicates (which were processed at a different time than the first replicates). This type of differences between replicates are also known as **batch effects**.
+</details>
+<br/>
+
+
+**QUESTION:** Would you be able to detect all of what you saw here using microarrays? If not, what and why?
+<details><summary>Click Here to see the answer</summary>
+With microarrays, you would be able to detect that the gene Rpn12R is differentially expressed, or that the gene Act5c is highly expressed. Nonetheless, you would not be able to look for variants, and you would not be able to see that the gene Run has splicing problems. You also cannot look for genes (or alternative transcripts) that were not pre-specified in the array you used. Moreover, you would not be identify potential batch issues like what we noticed with gene Act5c.
+</details>
+<br/>
 
 To perform differential expression analysis, one needs to count how many times a different transcript/gene is read. Popular tools to generate these counts from a SAM/BAM file include [htseq-count](http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html) and [featurecounts](http://bioinf.wehi.edu.au/featureCounts/).
 
