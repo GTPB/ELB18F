@@ -464,6 +464,15 @@ You can see two regions where the reads are marked in white, both with slightly 
 
 **NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
 
+**QUESTION**: Did you broadly understand the different aspects to consider when evaluating the quality of your alignments?
+
+**QUESTION**: Could you use Qualimap to produce quality reports from your SAM/BAM alignments? 
+
+**QUESTION**: Did you broadly understand the information in a Qualimap report and use it to detect potential issues in your data? 
+
+**QUESTION**: Could you use IGV to visualize alignments in the SAM/BAM format? 
+
+
 ## <a id="LO5">Broadly describe different HTS applications</a>
 
 ### <a id="LO5.1">Variant detection in resequencing experiments</a>
