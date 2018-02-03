@@ -477,13 +477,13 @@ You can see two regions where the reads are marked in white, both with slightly 
 
 ### <a id="LO5.1">Variant detection in resequencing experiments</a>
 
-After aligning reads against a reference genome, you can now see where and how the individual(s) genetic sequence differs from the reference genome. Using IGV, you have detected one mutation. To do this in a systematic way, there are specialized tools such as [GATK](https://www.broadinstitute.org/gatk/) and [freebayes](https://github.com/ekg/freebayes) that perform genotype attribution and detection of genetic variants from SAM/BAM alignment files.
+After aligning reads against a reference genome, you can now see where and how the individual(s) genetic sequence differs from the reference genome. Using IGV, you have detected one mutation (a Single Nucleotide Polymorphism - SNP). To do this in a systematic way, there are specialized tools such as [GATK](https://www.broadinstitute.org/gatk/) and [freebayes](https://github.com/ekg/freebayes) that perform genotype attribution and detection of genetic variants from SAM/BAM alignment files.
 
 **TASK** In the commandline, in the resequencing folder, type 'freebayes -f NC_000913.3_MG1655.fasta SRR1030347.alignment.sorted.bam > SRR1030347.alignment.vcf'. Open the resulting vcf file using a text editor or a spreadsheet.
 
 The current standard for reporting genetic variants is the variat call format ([VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf)), which is a tabular text based format, where each line contains information about one putative variant detected by the software.
 
-**QUESTION:** Are there variants in the vcf file you generated? What is the mutation with the highest confindence in the file? Note: quality is in the 4th column of the vcf file, in the Phred scale.
+**QUESTION:** Are there variants in the vcf file you generated? What is the mutation with the highest confidence in the file? Note: quality is in the 4th column of the vcf file, in the Phred scale.
 <details><summary>Click Here to see the answer</summary>
 	Yes, there are several variants found, most of them with very low quality. There is only one variant with high quality (Q=2754.76), at position 3846267 (A>C). Do you recognize this mutation from before?
 </details>
