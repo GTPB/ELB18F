@@ -520,6 +520,7 @@ After inferring trustworthy variants, their functional annotation (namely, of th
 **TASK** Go to the website [bacteria.ensembl.org](http://bacteria.ensembl.org). Select **Tools** and **Variant Effect Predictor**. Upload the vcf file (the last one you generated) and press "Run".
 
 ![VEP Input](images/vep_input.png) 
+<br/>
 
 **QUESTION:** What is the effect predicted by VEP of the A to C mutation we observed?
 <details><summary>Click Here to see the answer</summary>
@@ -528,6 +529,7 @@ The SNP causes a missesse mutation of the gene uhpT, causing an aminoacid change
 ![VEP Output](images/vep_output.png) 
 
 </details>
+<br/>
 <br/>
 
 Single nucleotide polymorphisms (SNP) are the variants that are most easily and commonly reported. Other variants pose different challenges and some are particularly difficult, such as the detection of transposable element activity. [Breseq](http://barricklab.org/twiki/bin/view/Lab/ToolsBacterialGenomeResequencing) is a software specialized in detecting several types of genomic events in short timescale evolutionary experiments in bacteria, including the movement of transposable elements. It produces user-friendly variant reports, including the functional annotation of variants that have been detected. This means it can predict not only which variants there are and where they are, but also their potential effects (in which genes, if they fall in a coding region, etc...).
