@@ -60,7 +60,8 @@ The following links are a good source of information regarding this sequencing t
   * Reading of signal and conversion into nucleotide bases
   
 </p></details>
-
+<br/>
+<br/>
 
 ## <a id="LO2">2 - Interpret and Manipulate raw sequencing data</a>
 
@@ -140,6 +141,8 @@ Many sequencing machines can read both ends of a fragment. In this case, the mac
 <details><summary>Click Here to see the answer</summary><p>
 The read identifiers are the same, in the same order (though the sequences are not). This is because they are readings of the same fragment, one (_1) in the forward and another (_2) in the reverse direction. Often the indication of forward and reverse is in the identifier itself.
 </p></details>
+<br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
