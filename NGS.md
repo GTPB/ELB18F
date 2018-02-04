@@ -635,7 +635,7 @@ For this practical session, we will use data extracted from [Guilgur et al, 2014
 <details><summary>Click Here to see the answer</summary>
 The gene Rpnr12r (Fbgn0036465) is expressed in the mutant samples, but not in the wild type samples.
 	
-![IGV SV](images/rpnr12r.jpg) 
+![IGV rpnr12r](images/rpnr12r.jpg) 
 	
 </details>
 <br/>
@@ -644,7 +644,7 @@ The gene Rpnr12r (Fbgn0036465) is expressed in the mutant samples, but not in th
 <details><summary>Click Here to see the answer</summary>
 The gene Run (FBgn0003300) is  slightly more expressed in the mutant samples. But the most noticeable difference is that the gene is poorly spliced in the mutant samples. This mutant affects a component of the spliceosome, and thus some of the genes are not spliced correctly, like this gene.
 	
-![IGV SV](images/run.jpg) 
+![IGV run](images/run.jpg) 
 	
 </details>
 <br/>
@@ -654,7 +654,7 @@ The gene Run (FBgn0003300) is  slightly more expressed in the mutant samples. Bu
 <details><summary>Click Here to see the answer</summary>
 Gene Act5c is very highly expressed in all samples.
 	
-![IGV SV](images/act5c.jpg) 
+![IGV act5c](images/act5c.jpg) 
 	
 </details>
 <br/>
@@ -801,12 +801,52 @@ Group significance tests which OTUs are significantly present in a group versus 
 
 ### <a id="LO5.5">Epigenomics</a>
 
-NGS can also be used to sequence specific regions of interest in the genome. An example of this are regions bound by transcription factors (TF). Using antibodies specific for a TF, the bound DNA can be selectively extracted and sequenced. In this case, we are interested in knowing which areas of the genome are enriched in sequenced reads (loci bound by the TF). This technique is called ChIP-Seq (chromatin IP followed by sequencing).
+NGS can also be used to sequence specific regions of interest in the genome. An example of this are regions bound by transcription factors (TF). Using antibodies specific for a given TF, the bound DNA can be selectively extracted and sequenced. In this case, we are interested in knowing which areas of the genome are enriched in sequenced reads (loci bound by the TF). This technique is called ChIP-Seq (chromatin IP followed by sequencing).
 
-**TASK**: Look at some data from (Myers et al., 2013): Open IGV, load as genome the file 'ecoli_NC_000913.2_MG1655.fa' in the epigenomics folder. Next, load the annotation file 'NC_000913.2_MG1655.gff', all the '*.bw' files (bigwig files are summary views of the alignments, representing average coverage along fixed-length intervals) and the 'MG1655_FNR_A_VS_INPUT_A_peaks.bed' file. Look at the following positions (examples from the paper): dmsA (gi|49175990|ref|NC_000913.2|:938,182-944,626) and ndH: (gi|49175990|ref|NC_000913.2|:1,163,308-1,168,612). To interpret the results, you need to know that 'FNR_IP' represents the DNA that comes with FNR antibody, 'INPUT' is what you obtain without antibody (note: why do you need this?). The 'peaks.bed' file contain regions of the genome enriched in DNA from the FNR antibody. Try to see if there is a correlation of the previous information with the WT RNA-Seq and the FNR mutant RNA-Seq. Turn on the green light when you're finished.
+We will look at some data from [(Myers et al., 2013)](http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003565). In this study, the authors generated a ChIP-Seq against the FNR transcription factor ('FNR_IP'), as well as a control pulldown without the antibody ('INPUT'). Certain programs, such as [MACS](https://github.com/taoliu/MACS), will compare the alignments of the TF ChIP-Seq against the alignments of the genomic control, and determine regions in the genome that are significantly enriched in the ChIP-Seq. To determine which genes were under direct control of FNR, the authors also generated RNA-Seq of a bacterial strain mutated in FNR (FNR-), and compared its gene expression against the wild type. 
 
-Most often the term epigenetics is associated to DNA methylation. One popular technique to assess methylation is reduced representation bisulfite sequencing (RRBS), where GC-rich DNA is obtained and subjected to bisulfite treatment that converts unmethylated cytosines to uracil. After aligning the reads sequenced  after bisulfite treatment with the reference genome, we can have an estimate of the percentage of methylation in those bases.
+**QUESTION**: Why do you need the control pulldown to analyse a ChIP-Seq experiment? 
+<details><summary>Click Here to see the answer</summary>
+Due to several factors, some parts of the genome are more frequently extracted than others. Therefore, if we want to know which parts of the genome are being enriched in a ChIP-Seq, we need to control for those intrinsic biases that are not related to the factor we are studying.
+</details>
+<br/>
 
-**TASK**: Look at an example of RRBS 'ENCODE_example_BSSeq.bed' (open with a text editor, or use cat in the terminal). The last two columns tell you the coverage and percentage of methylated bases relative to total bases sequenced at that position.
+**TASK**: Open IGV, load as genome the file 'ecoli_NC_000913.2_MG1655.fa' in the epigenomics folder. Next, load the annotation file 'NC_000913.2_MG1655.gff', all the '*.bw' files (bigwig files are summary views of the alignments, representing average coverage along fixed-length intervals) and the 'MG1655_FNR_A_VS_INPUT_A_peaks.bed' file (this bed file contains the regions in the genome enriched in the FNR ChIP-Seq). The bigwig files contain summary views of the FNR ChIP-Seq, the genomic control, and the RNA-Seq datasets.
 
-**NOTE**: Turn on the green light when you're finished. Don't hesitate to ask questions and to turn on the red light if you're having issues.
+**QUESTION**: Look at the position for the gene dmsA (gi|49175990|ref|NC_000913.2|:938,182-944,626). What is the likely effect of FNR in that gene?
+<details><summary>Click Here to see the answer</summary>
+You can see that the gene dmsA seems to be less expressed in the FNR mutant than in the wild type. Moreover, the FNR ChIP-Seq seems enriched in the region just upstream of the dmsA gene. Therefore, it is likely that FNR is direcly and positively regulating the expression of dmsA.
+
+![IGV dmsa](images/dmsa.jpg) 
+
+</details>
+<br/>
+
+**QUESTION**: Look at the position for the gene ndH (gi|49175990|ref|NC_000913.2|:1,163,308-1,168,612). What is the likely effect of FNR in that gene?
+<details><summary>Click Here to see the answer</summary>
+You can see that the gene ndH seems to be more expressed in the FNR mutant than in the wild type. Moreover, the FNR ChIP-Seq seems enriched in the region just upstream of the ndH gene. Therefore, it is likely that FNR is direcly and negatively regulating the expression of ndH.
+
+![IGV ndh](images/ndh.jpg) 
+
+</details>
+<br/>
+
+
+Most often the term epigenetics is associated to DNA methylation. One popular technique to assess methylation is reduced representation bisulfite sequencing (RRBS), where GC-rich DNA is obtained and subjected to bisulfite treatment that converts unmethylated cytosines to uracil. After aligning the reads sequenced after bisulfite treatment with the reference genome, we can have an estimate of the percentage of methylation in those bases, by counting how many of the bases were converted.
+
+**TASK**: Look at an example of RRBS 'ENCODE_example_BSSeq.bed' (open with a text editor, or use cat in the terminal, or in an excell spreadsheet). The last two columns tell you the total coverage and percentage of methylated bases, respectively.
+
+**QUESTION**: What's the coverage and percentage of methylated bases at position chr1:1000170-1000171?
+<details><summary>Click Here to see the answer</summary>
+The coverage is 82, percentage of methylation (unconverted bases) is 20%.
+</details>
+<br/>
+
+
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+
+**QUESTION**: Did you broadly understand the process of ChIP-Seq data analysis?
+
+**QUESTION**: Did you broadly understand the concept of integrating information from ChIP-Seq with RNA-Seq to infer possible regulatory events?
+
+**QUESTION**: Did you broadly understand the process of Reduced Representation Bisulfite Sequencing (RRBS)?
