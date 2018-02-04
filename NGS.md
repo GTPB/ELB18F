@@ -217,15 +217,16 @@ Illumina machines generate shorter reads, all with the same length. Pacbio and n
 The reverse read has poorer quality bases. This is usually the case, at least for illumina. This is because the reverse reads are generated after the forward reads.
 </details>
 <br/>
-
+<br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Could you run FastQC on a fastq file?
+* Could you run FastQC on a fastq file?
 
-**QUESTION**: Can you broadly list types of information that a FastQC report contains?
+* Can you broadly list types of information that a FastQC report contains?
 
-**QUESTION**: Can you interpret information in a FastQC report to detect potential issues with data in a fastq file?
+* Can you interpret information in a FastQC report to detect potential issues with data in a fastq file?
 <br/>
 <br/>
 
@@ -315,27 +316,30 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 	No, because you will lose the pairing information. Trimming software allows you to pass both files simultaneously so the pairing information is kept in the output.
 </details>
 <br/>
+<br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Could you manually remove low quality bases from the end of a read in the fastq format? 
+* Could you manually remove low quality bases from the end of a read in the fastq format? 
 
-**QUESTION**: Did you broadly understand the challenges of removing bad quality bases from reads? 
+* Did you broadly understand the challenges of removing bad quality bases from reads? 
 
-**QUESTION**: Could you use seqtk to remove low quality bases from the end of reads in a fastq file? 
+* Could you use seqtk to remove low quality bases from the end of reads in a fastq file? 
 
-**QUESTION**: Did you broadly understand the challenges of removing adaptors from reads? 
+* Did you broadly understand the challenges of removing adaptors from reads? 
 
-**QUESTION**: Could you use cutadapt to remove adaptors from reads in a fastq file? 
+* Could you use cutadapt to remove adaptors from reads in a fastq file? 
 
-**QUESTION**: Could you use trimmomatic to remove bad quality bases and remove adaptors from reads in a fastq file? 
+* Could you use trimmomatic to remove bad quality bases and remove adaptors from reads in a fastq file? 
 
-**QUESTION**: Did you understand the issue of manipulating paired-end fastq files? 
+* Did you understand the issue of manipulating paired-end fastq files? 
+<br/>
+<br/>
 
+## <a id="LO3">3 - Align HTS data against a genome</a>
 
-## <a id="LO3">Align HTS data against a genome</a>
-
-### <a id="LO3.1">Use the BWA aligner to align HTS data against a genome</a>
+### <a id="LO3.1">3.1 - Use the BWA aligner to align HTS data against a genome</a>
 
 One of the most common applications of NGS is resequencing, where we want to genotype an individual from a species whose genome has already been assembled (a reference genome), such as the human genome, often with the goal to identify mutations that can explain a phenotype of interest.
 
@@ -348,7 +352,7 @@ After obtaining millions of short reads, we need to align them to a (sometimes l
 **NOTE:** You may have noticed that we used paired fastq files in this alignment. The aligners can use the pairing information to improve the alignments, as we will see later.
 
 
-### <a id="LO3.2">The SAM/BAM alignment format</a>
+### <a id="LO3.2">3.2 - The SAM/BAM alignment format</a>
 
 To store millions of alignments, researchers also had to develop new, more practical formats. The [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf) is a tabular text file format, where each line contains information for one alignment.
  
@@ -367,23 +371,26 @@ SAM files are most often compressed as BAM (Binary SAM) files, to reduce space. 
 **TASK** Let's transform the SAM file into an indexed BAM file. In the same terminal window where you indexed the genome, type 'samtools view -Sb SRR1030347.alignment.sam > SRR1030347.alignment.bam'. To create the index, the alignments in the bam file need to be sorted by position. Type 'samtools sort SRR1030347.alignment.bam -o SRR1030347.alignment.sorted.bam'. Finally, we can create the index 'samtools index SRR1030347.alignment.sorted.bam'. Notice now the appearance of a companion file SRR1030347.alignment.sorted.bam.bai that contains the index. This file should always accompany its corresponding bam file.
 
 **TASK** Let's do the whole process using galaxy. Upload the reference genome and the paired fastq files into Galaxy. Check their quality and perform any necessary filtering using trimmomatic or with any of the tools we saw before. Next, perform an alignment with bwa mem of the paired reads (you need to select the option of paired reads) against the reference genome (choose one from history). Next, download the bam file that was created. Also download the companion bai index file (you need to press on the download icon to have the option to download the bam and the bai files). 
+<br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the challenges of aligning millions of short reads to a genome? 
+* Did you broadly understand the challenges of aligning millions of short reads to a genome? 
 
-**QUESTION**: Did you broadly understand the assumptions underlying the use of burrows-wheeler aligners?
+* Did you broadly understand the assumptions underlying the use of burrows-wheeler aligners?
 
-**QUESTION**: Could you use bwa to align reads to a reference genome? 
+* Could you use bwa to align reads to a reference genome? 
 
-**QUESTION**: Do you know what is the most common alignment format these aligners use? 
+* Do you know what is the most common alignment format these aligners use? 
 
-**QUESTION**: Do you broadly understand the contents of a SAM/BAM file and the difference between SAM and BAM? 
+* Do you broadly understand the contents of a SAM/BAM file and the difference between SAM and BAM? 
+<br/>
+<br/>
 
+## <a id="LO4">4 - Visualize alignments</a>
 
-## <a id="LO4">Visualize alignments</a>
-
-### <a id="LO4.1">Use Qualimap to assess quality of alignments</a>
+### <a id="LO4.1">4.1 - Use Qualimap to assess quality of alignments</a>
 
 After generating alignments and obtaining a SAM/BAM file, how do I know this step went well? The same way as FastQC generates reports of fastq files to assess quality of raw data, there are programs that generate global reports on the quality of alignments. One popular tool for this is [qualimap](http://qualimap.bioinfo.cipf.es/).
 
@@ -434,8 +441,9 @@ Many of the plots produced by Qualimap are similar to the ones produced by FastQ
 	The lower coverage may explain a higher local variation, but not the genome-wide positional bias in coverage. Another explanation is the use of enzymatic fragmentation, which is not entirely random, but again this is unlikely to explain the positional variation. A more likely explanation is that bacteria are still in exponencial growth in the case of the MiSeq example, which would explain a greater amount of DNA fragments obtained from the region surrounding the origin of replication.
 </details>
 <br/>
+<br/>
 
-### <a id="LO4.2">Use IGV to visualize the content of a BAM file</a>
+### <a id="LO4.2">4.2 - Use IGV to visualize the content of a BAM file</a>
 
 You can also directly visualize the alignments using appropriate software such as [IGV](https://www.broadinstitute.org/igv/) or [Tablet](https://ics.hutton.ac.uk/tablet/). 
 
@@ -467,21 +475,23 @@ You can see two regions where the reads are marked in white, both with slightly 
 
 </details>
 <br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the different aspects to consider when evaluating the quality of your alignments?
+*: Did you broadly understand the different aspects to consider when evaluating the quality of your alignments?
 
-**QUESTION**: Could you use Qualimap to produce quality reports from your SAM/BAM alignments? 
+* Could you use Qualimap to produce quality reports from your SAM/BAM alignments? 
 
-**QUESTION**: Did you broadly understand the information in a Qualimap report and use it to detect potential issues in your data? 
+* Did you broadly understand the information in a Qualimap report and use it to detect potential issues in your data? 
 
-**QUESTION**: Could you use IGV to visualize alignments in the SAM/BAM format? 
+* Could you use IGV to visualize alignments in the SAM/BAM format? 
+<br/>
+<br/>
 
+## <a id="LO5">5 - Broadly describe different HTS applications</a>
 
-## <a id="LO5">Broadly describe different HTS applications</a>
-
-### <a id="LO5.1">Variant detection in resequencing experiments</a>
+### <a id="LO5.1">5.1 - Variant detection in resequencing experiments</a>
 
 After aligning reads against a reference genome, you can now see where and how the individual(s) genetic sequence differs from the reference genome. Using IGV, you have detected one mutation (a Single Nucleotide Polymorphism - SNP). To do this in a systematic way, there are specialized tools such as [GATK](https://www.broadinstitute.org/gatk/) and [freebayes](https://github.com/ekg/freebayes) that perform genotype attribution and detection of genetic variants from SAM/BAM alignment files.
 
@@ -532,23 +542,25 @@ In the bottom of the page we can see unassigned missing coverage and junction ev
 
 </details>
 <br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the process of finding variants from alignments?
+* Did you broadly understand the process of finding variants from alignments?
 
-**QUESTION**: Could you use freebayes to infer variants?
+* Could you use freebayes to infer variants?
 
-**QUESTION**: Did you broadly understand the content of a VCF file?
+* Did you broadly understand the content of a VCF file?
 
-**QUESTION**: Did you broadly understand the process of inferring the effect of a variant?
+* Did you broadly understand the process of inferring the effect of a variant?
 
-**QUESTION**: Could you use the VEP online tool to infer the effect of variations in a VCF file?
+* Could you use the VEP online tool to infer the effect of variations in a VCF file?
 
-**QUESTION**: Did you broadly understand the output of breseq and the challenge of finding different types of vriants?
+* Did you broadly understand the output of breseq and the challenge of finding different types of vriants?
+<br/>
+<br/>
 
-
-### <a id="LO5.2">Denovo genome assembly and annotation</a>
+### <a id="LO5.2">5.2 - Denovo genome assembly and annotation</a>
 
 Another very common application of NGS, particularly for bacteria and virus without an assembled genome, is to obtain its complete genome from the assembly of million of short reads. This poses significant computational challenges and novel methods had to be devised to deal with the complexity. The most popular tools use [de-bruijn graphs](https://en.wikipedia.org/wiki/De_Bruijn_graph) to assemble millions of short reads. Although it is becoming much more feasible, assembly is still a very computer intensive process that needs to be run in powerful servers for most cases (particularly in longer and repeat-rich eukaryote genomes). [Spades](http://cab.spbu.ru/software/spades/) (mostly for bacteria) and [sga](https://github.com/jts/sga/wiki) (for longer eukaryote genomes) are examples of popular assemblers.
 
@@ -608,23 +620,26 @@ The genome assembly process generates a sequence of nucleotides in the form of a
 <br/>
 
 **NOTE:** Annotating a genome allow us to use other measures to infer the quality of our assembly. Namely, we usually prefer assemblies where we can annotate more genes (assemblies that are too fragmented, or with incorrect sequence, have less annotated genes). One particular test relates to genes that are present in all species, where we prefer assemblies where we can detect as many of these genes as possible.
+<br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the process of genome assembly?
+* Did you broadly understand the process of genome assembly?
 
-**QUESTION**: Could you use spades to assemble contigs from short reads?
+* Could you use spades to assemble contigs from short reads?
 
-**QUESTION**: Did you broadly understand different factors affecting the genome assembly process?
+* Did you broadly understand different factors affecting the genome assembly process?
 
-**QUESTION**: Can you list different measures to asess the quality of a genome?
+* Can you list different measures to asess the quality of a genome?
 
-**QUESTION**: Did you broadly understand the output of Quast to compare different assemblies?
+* Did you broadly understand the output of Quast to compare different assemblies?
 
-**QUESTION**: Did you broadly understand the process of genome annotation?
+* Did you broadly understand the process of genome annotation?
+<br/>
+<br/>
 
-
-### <a id="LO5.3">Transcriptomics using RNA-Seq</a>
+### <a id="LO5.3">5.3 - Transcriptomics using RNA-Seq</a>
 
 Another very common application of NGS is to sample the transcriptome, much like gene expression microarrays. The main advantages of RNA Sequencing versus microarrays is a better signal-to-noise ratio and the ability to detect novel transcripts (something impossible with microarrays). Data processing is similar to genomic resequencing, although mRNA is usually spliced (in eukaryotes at least), and thus we need to use splice-aware aligners such as [Tophat](https://ccb.jhu.edu/software/tophat/index.shtml) and its successor [Hisat](http://ccb.jhu.edu/software/hisat2/index.shtml) to map short transcriptomic reads to a reference genome. These aligners are based on the burrows-wheeler aligners we discussed previously, but with extensions to deal with the possibility of spliced reads. Hisat was specifically designed to handle RNA-Seq data.
 
@@ -741,20 +756,22 @@ Only the gene FBgn0036465 (Rpn12R). The gene FBgn0003300 (run), despite having a
 	
 </details>
 <br/>
+<br/>
 
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Could you use Hisat to align RNA-Seq reads against a reference genome?
+* Could you use Hisat to align RNA-Seq reads against a reference genome?
 
-**QUESTION**: Could you use htseq-counts to generate gene counts from alignments and a reference annotation?
+* Could you use htseq-counts to generate gene counts from alignments and a reference annotation?
 
-**QUESTION**: Could you use DESeq2 to obtain differentially expressed genes?
+* Could you use DESeq2 to obtain differentially expressed genes?
 
-**QUESTION**: Did you broadly understand the process of differential gene expression analysis?
+* Did you broadly understand the process of differential gene expression analysis?
+<br/>
+<br/>
 
-
-### <a id="LO5.4">16S Metagenomics</a>
+### <a id="LO5.4">5.4 - 16S Metagenomics</a>
 
 In MetaGenomics, we don't sequence a single individual or clone, but a community of individuals of different species, usually with the goal of identifying the species that are present, and what are their relative abundances. As you can imagine, sequencing many genomes simultaneously (each of them present at different frequencies) is a very complex task, and techniques to do it efficiently are still an area of active research. Sequencing the DNA of all genomes simultaneously is also known as "Whole Shotgun Metagenomics".
 
@@ -794,15 +811,17 @@ The antibiotic treated samples separate well from the untreated samples.
 Group significance tests which OTUs are significantly present in a group versus another (much like RNA-Seq differential gene expression). Many firmicute taxa are differentially present between the two groups, as well as Escherichia. This agrees with what we say before in the barplots.
 </details>
 <br/>
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the process of 16S metagenomics data analysis?
+* Did you broadly understand the process of 16S metagenomics data analysis?
 
-**QUESTION**: Did you broadly understand the concept of alpha diversity (total diversity)?
+* Did you broadly understand the concept of alpha diversity (total diversity)?
 
-**QUESTION**: Did you broadly understand the concept of beta diversity (comparative diversity)?
-
+* Did you broadly understand the concept of beta diversity (comparative diversity)?
+<br/>
+<br/>
 
 ### <a id="LO5.5">Epigenomics</a>
 
@@ -846,12 +865,14 @@ Most often the term epigenetics is associated to DNA methylation. One popular te
 The coverage is 82, percentage of methylation (unconverted bases) is 20%.
 </details>
 <br/>
-
+<br/>
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
-**QUESTION**: Did you broadly understand the process of ChIP-Seq data analysis?
+* Did you broadly understand the process of ChIP-Seq data analysis?
 
-**QUESTION**: Did you broadly understand the concept of integrating information from ChIP-Seq with RNA-Seq to infer possible regulatory events?
+* Did you broadly understand the concept of integrating information from ChIP-Seq with RNA-Seq to infer possible regulatory events?
 
-**QUESTION**: Did you broadly understand the process of Reduced Representation Bisulfite Sequencing (RRBS)?
+* Did you broadly understand the process of Reduced Representation Bisulfite Sequencing (RRBS)?
+<br/>
+<br/>
