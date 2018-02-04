@@ -125,6 +125,7 @@ The base quality character is 'I', which corresponds to the decimal 73 in the AS
 <details><summary>Click Here to see the answer</summary><p>
 The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-4 ~= 4% error.
 </p></details>
+<br/>
 
 **QUESTION**: If all bases of a ficticious machine had a Q=20 (1% probability of error), what would be the probability that one 100bp read from that machine would be completely correct?
 <details><summary>Click Here to see the answer</summary><p>
@@ -132,6 +133,7 @@ P(correct)=(0.99)^100 ~= 36.6%!
 
 This serves to exemplify that most reads in current sequencing machines are likely to have at least one base incorrect.
 </p></details>
+<br/>
 
 Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files old_illumina_paired_1 (containing the forward reads) and old_illumina_paired_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
 
