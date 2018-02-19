@@ -139,7 +139,7 @@ Many sequencing machines can read both ends of a fragment. In this case, the mac
 
 ![Adaptor](images/paired-end.jpg)
 
-**QUESTION**: Uncompress the fastq files paired_end_example_1.fastq.gz and paired_end_example_2.fastq.gz that are in the folder fastq_examples. Open them using a text editor. Can you see a relationship betweem the reads in both files?
+**QUESTION**: Inside the folder fastq_examples you can see several compressed fastq files. Uncompress the fastq files paired_end_example_1.fastq.gz and paired_end_example_2.fastq.gz that are in the folder fastq_examples (either by clicking on the files, or using gunzip on the command line). Open the uncompressed fastq files using any text editor (eg. kate). Can you see a relationship betweem the reads in both files?
 <details><summary>Click Here to see the answer</summary><p>
 The read identifiers are the same, in the same order (though the sequences are not). This is because they are readings of the same fragment, one (_1) in the forward and another (_2) in the reverse direction. Often the indication of forward and reverse is in the identifier itself.
 </p></details>
