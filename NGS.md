@@ -135,7 +135,7 @@ This serves to exemplify that most reads in current sequencing machines are like
 </p></details>
 <br/>
 
-Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files old_illumina_paired_1 (containing the forward reads) and old_illumina_paired_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
+Many sequencing machines can read both ends of a fragment. In this case, the machine will generate two **paired** fastq files, one with the forward reads and another with the reverse reads. You can find an example of this is the example fastq files paired_end_example_1 (containing the forward reads) and paired_end_example_2 (containing the reverse reads). These fastq are paired because the reads for the same fragment are in the same order in the two files. For example, the first read in the forward fastq correponds to the forward reading of the same fragment as the first read in the reverse fastq.
 
 ![Adaptor](images/paired-end.jpg)
 
@@ -146,7 +146,7 @@ The read identifiers are the same, in the same order (though the sequences are n
 <br/>
 <br/>
 
-**NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
+**NOTE**: Turn on the green light when you're finished. Assess how well you achieved the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
 * How well do you understand the content of a fastQ file?
 
@@ -281,7 +281,7 @@ Like you have FastQC to automatically produce plots from fastq files, you also h
 
 Most software for the analysis of HTS data is freely available to users. Nonetheless, they often require the use of the command line in a Unix-like environment (seqtk is one such case). User-friendly desktop software such as [CLC](https://www.qiagenbioinformatics.com/products/clc-genomics-workbench/) or [Ugene](http://ugene.net/) is available, but given the quick pace of developmpent in this area, they are constantly outdated. Moreover, even with better algorithms, HTS analysis must often be run in external servers due to the heavy computational requirements. One popular tool is [Galaxy](https://galaxyproject.org/), which allows even non-expert users to execute many different HTS analysis programs through a simple web interface.
 
-**TASK**: In the web browser of the workstation you're using, open 'localhost'. You should see the Galaxy interface. Upload into Galaxy the files MiSeq_76bp.fastq.gz and MiSeq_250bp.fastq.gz (you should now see them on your history in the right panel). Run fastqc (by searching for this tool on the left panel) in both files. In galaxy again, run seqtk trimfq on the file MiSeq_250bp.fastq.gz with the same parameters as you used in the command line. 
+**TASK**: Let's use Galaxy to run some bioinformatic tools. Open the web browser (eg. Firefox). Type localhost in the URL tab (where you put the web addresses). This means that you are accessing a galaxy instance that is running on your local machine. You should see the Galaxy interface on your web browser. Click on the upload icon on the top left of the interface. Upload into Galaxy the files MiSeq_76bp.fastq.gz and MiSeq_250bp.fastq.gz. You should now seem them on your history in the right panel. You can visualize their content by pressing the view data icon (the eye icon). After you have your data, you're ready to run some tools on your data. The tools are listed on the left panel. Search for fastqc on the tool search bar on the left panel. By clicking on the tool you should have in the middle the interface to run fastQC. To run fastc you just need to select the fastq file and press "Execute". Run fastqc on the fastq files you uploaded and see the result. Still in galaxy again, search for and run "seqtk trimfq" on the file MiSeq_250bp.fastq with the same parameters as you used in the command line. 
 
 As we saw before, sequencing machines (namely, the illumina ones) require that you add specific sequences (adaptors) to your DNA so that it can be sequenced. For many different reasons, such sequences may end up in your read, and you need to remove these artifacts from your sequences.
 
@@ -303,21 +303,68 @@ There are many programs to remove adaptors from your sequences, such as [cutadap
 
 [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) is a tool that performs both trimming of low quality reads, as well as adaptor removal. Moreover, it already contains a library of commonly used adaptors, so you don't need to know their sequence. Similar to FastQC, it is a java program, so you can use it in any operating system (such as Windows and Mac), although unlike FastQC it needs to be run only using the commandline. 
 
-**TASK**: In Galaxy, use Trimmomatic to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads (for this you need to select to perform an initial Illumina clip). Unlike seqtk, which always assume Phred scores (based on the "!" character), Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). After you checked that this is the case in the FastQC report, you can edit the attributes of you file (the pencil mark) and change the datatype to fastqsanger.
-
-**QUESTION**: What happened? To answer, look at the report from cutadapt, and use FastQC on the fastq that is output by cutadapt. 
+**QUESTION**: Find and select the Trimmomatic tool in Galaxy. What different operations can you perform with Trimmomatic that use the base quality information? 
 <details><summary>Click Here to see the answer</summary>
-	Almost no read was affected. This is because what you get is a readthrough, so what is actually in the read is the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). This time, most reads should have had the adaptor removed.
+You can perform the following operations with Trimmomatic (either isolated, or in combination):
+
+	* ILLUMINACLIP: Cut adapter and other illumina-specific sequences from the read
+	
+	* SLIDINGWINDOW: Perform a sliding window trimming, cutting once the average quality within the window falls below a threshold
+        
+	* MINLEN: Drop the read if it is below a specified length
+
+	* LEADING: Cut bases off the start of a read, if below a threshold quality
+
+	* TRAILING: Cut bases off the end of a read, if below a threshold quality
+
+	* CROP: Cut the read to a specified length
+
+	* HEADCROP: Cut the specified number of bases from the start of the read
+
+	* AVGQUAL: Drop the read if the average quality is below a specified value
+
+	* MAXINFO: Trim reads adaptively, balancing read length and error rate to maximise the value of each read
+	
 </details>
 <br/>
 
-**QUESTION**: Can you trim the paired-end forward and reverse fastq files separately? 
+**Note**: You may notice that Trimmomatic does not seem to find the fastq file you uploaded. This is because the fastq using the commonly used Phred scores (starting on the "!" character) in Galaxy correspond to the type 'fastqsanger'. Historically, base qualities for fastq files from illumina machines used to start in the "@" character (character 64). In galaxy, these correspond to the type 'fastqillumina'. Nowadays, all fastq files are in the Phred33 (fastqsanger) format, but Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). When you upload a file, Galaxy does not know which one it is, so it attributes it with the generic "fastq" format, which is neither fastqsanger nor fastqillumina, and therefore Trimmomatic cannot find any fastqsanger file. FastQC can report to you which is the format of your file. To use Trimmomatic, after you checked that the file is really a fastqsanger file in the FastQC report, you can edit the attributes of your file (the pencil icon) and change the datatype manually to fastqsanger.
+
+
+**TASK**: Let's use Trimmomatic in Galaxy to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads. This fastq file is in the commonly used Phred score, so you can change its file type to 'fastqsanger'. Now Trimmomatic should find it. Let's perform the default operation "Sliding Window" of size 4 and average quality 20. Let's also remove the adaptors. For this, select 'Yes' on 'Perform initial ILLUMINACLIP step'. The select "Nextera (paired end)" and leave the rest of the parameters as they were. Finally, you can click on Execute.
+
+**QUESTION**: What happened? To answer, use FastQC on the fastq output by Trimmomatic. 
+<details><summary>Click Here to see the answer</summary>
+	The base quality distribution improved. Moreover, the few Nextera primers in the end of the reads also disappeared. Nonetheless, read length is now shorted, and we have fewer reads than before.
+</details>
+<br/>
+
+**QUESTION**: To perform trimming on paired files, can you trim the forward and reverse fastq files separately? 
 <details><summary>Click Here to see the answer</summary>
 	No, because you will lose the pairing information. Trimming software allows you to pass both files simultaneously so the pairing information is kept in the output.
 </details>
 <br/>
 <br/>
 <br/>
+
+**TASK**: Let's use Trimmomatic in Galaxy with a paired-end dataset. Upload the files paired_end_example_1.fastq.gz and paired_end_example_2.fastq.gz. Change their types to 'fastqsanger'. In Trimmomatic, select 'Paired-end (two separate input file)'. Perform the same operations as before.
+
+**QUESTION**: Now, you get 4 files as output from Trimmomatic. Can you explain what these are? 
+<details><summary>Click Here to see the answer</summary>
+You get the following paired files: Trimmomatic on paired_end_example_1.fastq (R1 paired) and Trimmomatic on paired_end_example_2.fastq (R2 paired). These contain the paired reads that "survived" the quality operation from both the forward and the reverse and could therefore be kept as pairs. Then, you have the cases where just one of the pairs was removed because of low quality. In this case, it cannot be kept as pair, but in a separate "isolated" file, both for the forward (Trimmomatic on paired_end_example_1.fastq (R1 unpaired)) and the reverse (Trimmomatic on paired_end_example_2.fastq (R2 unpaired)).
+</details>
+<br/>
+<br/>
+<br/>
+
+**QUESTION**: From the "isolated" reads resulting from Trimmomatic, which one has more reads? Why is that?
+<details><summary>Click Here to see the answer</summary>
+The forward file (Trimmomatic on paired_end_example_1.fastq (R1 unpaired)) has more reads, because the reverse reads have usually less quality, and therefore are more likely to be removed in the filtering process.
+</details>
+<br/>
+<br/>
+<br/>
+
 
 **NOTE**: Turn on the green light when you're finished. Assess how well you achieve the learning outcome. For this, see how well you responded to the different questions during the activities and also make the following questions to yourself.
 
