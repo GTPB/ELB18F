@@ -329,13 +329,13 @@ You can perform the following operations with Trimmomatic (either isolated, or i
 <br/>
 
 **Note**: You may notice that Trimmomatic does not seem to find the fastq file you uploaded. This is because the fastq using the commonly used Phred scores (starting on the "!" character) in Galaxy correspond to the type 'fastqsanger'. Historically, base qualities for fastq files from illumina machines used to start in the "@" character (character 64). In galaxy, these correspond to the type 'fastqillumina'. Nowadays, all fastq files are in the Phred33 (fastqsanger) format, but Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). When you upload a file, Galaxy does not know which one it is, so it attributes it with the generic "fastq" format, which is neither fastqsanger nor fastqillumina, and therefore Trimmomatic cannot find any fastqsanger file. FastQC can report to you which is the format of your file. To use Trimmomatic, after you checked that the file is really a fastqsanger file in the FastQC report, you can edit the attributes of your file (the pencil icon) and change the datatype manually to fastqsanger.
-
+<br/>
 
 **TASK**: Let's use Trimmomatic in Galaxy to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads. This fastq file is in the commonly used Phred score, so you can change its file type to 'fastqsanger'. Now Trimmomatic should find it. Let's perform the default operation "Sliding Window" of size 4 and average quality 20. Let's also remove the adaptors. For this, select 'Yes' on 'Perform initial ILLUMINACLIP step'. The select "Nextera (paired end)" and leave the rest of the parameters as they were. Finally, you can click on Execute.
 
 **QUESTION**: What happened? To answer, use FastQC on the fastq output by Trimmomatic. 
 <details><summary>Click Here to see the answer</summary>
-	The base quality distribution improved. Moreover, the few Nextera primers in the end of the reads also disappeared. Nonetheless, read length is now shorted, and we have fewer reads than before.
+	The base quality distribution improved. Moreover, the few Nextera primers in the end of the reads also disappeared. Nonetheless, read length is now shortened, and we have fewer reads than before.
 </details>
 <br/>
 
@@ -345,16 +345,16 @@ You can perform the following operations with Trimmomatic (either isolated, or i
 </details>
 <br/>
 <br/>
-<br/>
+
 
 **TASK**: Let's use Trimmomatic in Galaxy with a paired-end dataset. Upload the files paired_end_example_1.fastq.gz and paired_end_example_2.fastq.gz. Change their types to 'fastqsanger'. In Trimmomatic, select 'Paired-end (two separate input file)'. Perform the same operations as before.
+
+<br/>
 
 **QUESTION**: Now, you get 4 files as output from Trimmomatic. Can you explain what these are? 
 <details><summary>Click Here to see the answer</summary>
 You get the following paired files: Trimmomatic on paired_end_example_1.fastq (R1 paired) and Trimmomatic on paired_end_example_2.fastq (R2 paired). These contain the paired reads that "survived" the quality operation from both the forward and the reverse and could therefore be kept as pairs. Then, you have the cases where just one of the pairs was removed because of low quality. In this case, it cannot be kept as pair, but in a separate "isolated" file, both for the forward (Trimmomatic on paired_end_example_1.fastq (R1 unpaired)) and the reverse (Trimmomatic on paired_end_example_2.fastq (R2 unpaired)).
 </details>
-<br/>
-<br/>
 <br/>
 
 **QUESTION**: From the "isolated" reads resulting from Trimmomatic, which one has more reads? Why is that?
