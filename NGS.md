@@ -123,7 +123,7 @@ The base quality character is 'I', which corresponds to the decimal 73 in the AS
 
 **QUESTION**: What is the probability of error of the last base of the read?
 <details><summary>Click Here to see the answer</summary><p>
-The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-4 ~= 4% error.
+The base quality character is '/', which corresponds to the decimal 47 in the ASCII table. Q = 47-33 = 14. P(14) = 10^(-14/10) = 10^-1.4 ~= 4% error.
 </p></details>
 <br/>
 
@@ -170,7 +170,7 @@ Other plots indicate biases in nucleotidic content of reads, either globally (su
 
 **NOTE**: Given the size of fastq files (usually in the order of Gb), they are most frequently compressed as fastq.gz files. In fact, most tools (such as FastQC) work directly with fastq.gz to reduce space.
 
-**TASK**: Open a terminal. type 'fastqc' and press enter. The graphical interface of FastQC should appear. Open the file MiSeq_76bp.fastq.gz inside of the folder fastq_examples. Look at the different plots you obtained. Next, open the file MiSeq_250bp.fastq.gz. Press the green button when you ran FastQC on both cases.
+**TASK**: Open a terminal. type 'fastqc' and press enter. The graphical interface of FastQC should appear. Open the file MiSeq_76bp.fastq.gz inside of the folder fastq_examples. Look at the different plots you obtained. Next, open the file MiSeq_250bp.fastq.gz.
 
 **QUESTION**: What information is in a FastQC report?
 <details><summary>Click Here to see the answer</summary>
@@ -203,7 +203,7 @@ The MiSeq_250bp fastq file contains 10000 reads of 250bp, while the MiSeq_76bp c
 </details>
 <br/>
 
-**TASK**: In a terminal window, go to the folder fastq_examples. Type 'fastqc *.fastq.gz' and press enter. 
+**TASK**: Insider the folder fastq_examples, you can see fastq files from differente sequencing technologies or applications. In a terminal window, go to the folder fastq_examples. Type 'fastqc *.fastq.gz' and press enter. Inside the folder, you should now see a series of html files with FastQC reports of each of the fastq files. You can open them with the web browser by clicking on them with the mouse, or by running 'firefox *.html'.
 
 **QUESTION**: Can you see differences between the different sequencing technologies?
 <details><summary>Click Here to see the answer</summary>
@@ -328,20 +328,12 @@ You can perform the following operations with Trimmomatic (either isolated, or i
 </details>
 <br/>
 
-**Note**: You may notice that Trimmomatic does not seem to find the fastq file you uploaded. This is because the fastq using the commonly used Phred scores (starting on the "!" character) in Galaxy correspond to the type 'fastqsanger'. Historically, base qualities for fastq files from illumina machines used to start in the "@" character (character 64). In galaxy, these correspond to the type 'fastqillumina'. Nowadays, all fastq files are in the Phred33 (fastqsanger) format, but Trimmomatic requires you to guarantee that your file in the fastqsanger (Phred 33, instead of the fastqillumina 64). When you upload a file, Galaxy does not know which one it is, so it attributes it with the generic "fastq" format, which is neither fastqsanger nor fastqillumina, and therefore Trimmomatic cannot find any fastqsanger file. FastQC can report to you which is the format of your file. To use Trimmomatic, after you checked that the file is really a fastqsanger file in the FastQC report, you can edit the attributes of your file (the pencil icon) and change the datatype manually to fastqsanger.
-<br/>
 
 **TASK**: Let's use Trimmomatic in Galaxy to remove low quality bases from MiSeq_250bp.fastq.gz, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads. This fastq file is in the commonly used Phred score, so you can change its file type to 'fastqsanger'. Now Trimmomatic should find it. Let's perform the default operation "Sliding Window" of size 4 and average quality 20. Let's also remove the adaptors. For this, select 'Yes' on 'Perform initial ILLUMINACLIP step'. The select "Nextera (paired end)" and leave the rest of the parameters as they were. Finally, you can click on Execute.
 
 **QUESTION**: What happened? To answer, use FastQC on the fastq output by Trimmomatic. 
 <details><summary>Click Here to see the answer</summary>
 	The base quality distribution improved. Moreover, the few Nextera primers in the end of the reads also disappeared. Nonetheless, read length is now shortened, and we have fewer reads than before.
-</details>
-<br/>
-
-**QUESTION**: To perform trimming on paired files, can you trim the forward and reverse fastq files separately? 
-<details><summary>Click Here to see the answer</summary>
-	No, because you will lose the pairing information. Trimming software allows you to pass both files simultaneously so the pairing information is kept in the output.
 </details>
 <br/>
 <br/>
@@ -448,7 +440,7 @@ After generating alignments and obtaining a SAM/BAM file, how do I know this ste
 
 A Qualimap report includes, among other things:  
 
-  * Number of aligned reads and other global statistics
+  * Number of aligned/mapped reads and other global statistics
   
   * Coverage across the genome and the histogram of coverages
   
