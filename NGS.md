@@ -1,5 +1,5 @@
 
-# ELB17S
+# ELB
 
 ## Learning Objectives:
   - Broadly describe the High Throughput Sequencing Workflow
