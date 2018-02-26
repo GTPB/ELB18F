@@ -12,7 +12,7 @@ Topics | Practicals |
 Topics | Practicals |
 ----- | -----|
 [Pairwise Alignments]() | [Pairwise Aligments Exercises](https://github.com/GTPB/ELB18F/blob/master/Presentations/02-Pairwise_Alignment_Practical.pdf) |
-4. [Database Searching Methods]() | [Database Searching Exercises](https://github.com/GTPB/ELB18F/blob/master/Presentations/03-Database_Searching_Practical.pdf)|
+[Database Searching Methods]() | [Database Searching Exercises](https://github.com/GTPB/ELB18F/blob/master/Presentations/03-Database_Searching_Practical.pdf)|
 
 -----
 
@@ -24,6 +24,7 @@ Topics | Practicals |
 [Protein Sequence Analysis]() | [Protein Structure Exercises](https://github.com/GTPB/ELB18F/blob/master/Presentations/05-Structure_Prediction_Practical.pdf) |
 [Sequence Alignments](https://github.com/GTPB/ELB18F/blob/master/Presentations/Pairwise_Sequence_Alignment.pptx) | [Sequence Alignment Exercises](https://github.com/GTPB/ELB18F/blob/master/Presentations/06-Multiple_Sequence_Alignment.pdf)|
 
+-----
 
 # Day 4 & Day 5
 
