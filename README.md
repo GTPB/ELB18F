@@ -30,9 +30,9 @@ In the training course design, this is intentionally built-in, to allow us to sh
 
 Days | Topics |
 ----- | ----- |
-[Day 1](https://github.com/GTPB/ELB18F/blob/master/INDEX.md#Day1) | Information Resources & Genome Databases
-[Day 2](https://github.com/GTPB/ELB18F/blob/master/INDEX.md#Day2) | Pairwise Alignments. Database Searching Methods
-[Day 3](https://github.com/GTPB/ELB18F/blob/master/INDEX.md#Day3) | Primer Design. Protein Sequence Analysis. Sequence Alignments
+[Day 1](https://github.com/GTPB/ELB18F/blob/master/INDEX.md) | Information Resources & Genome Databases
+[Day 2](https://github.com/GTPB/ELB18F/blob/master/INDEX.md) | Pairwise Alignments. Database Searching Methods
+[Day 3](https://github.com/GTPB/ELB18F/blob/master/INDEX.md) | Primer Design. Protein Sequence Analysis. Sequence Alignments
 [Day 4](https://github.com/GTPB/ELB18F/blob/master/NGS.md) | NGS Data. Quality Control and Pre-processing. Read Mapping
 [Day 5](https://github.com/GTPB/ELB18F/blob/master/NGS.md) | Variant Prediction. Genome Assembly and Annotation. Transcriptomics and Epigenomics
 
