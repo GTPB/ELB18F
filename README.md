@@ -32,7 +32,7 @@ Days | Topics |
 ----- | ----- |
 Day 1 | Information Resources & Genome Databases
 Day 2 | Pairwise Alignments. Database Searching Methods
-Day 3 | Primer Design. Protein Sequance Analysis. Sequence Alignments
+Day 3 | Primer Design. Protein Sequence Analysis. Sequence Alignments
 Day 4 | NGS Data. Quality Control and Pre-processing. Read Mapping
 Day 5 | Variant Prediction. Genome Assembly and Annotation. Transcriptomics and Epigenomics
 
