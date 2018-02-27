@@ -38,5 +38,8 @@ Days | Topics |
 
 -----
 
-## This course was taught at:
-- [ELB18F](http://gtpb.igc.gulbenkian.pt/bicourses/2018/ELB18F/index.html) February 19 - 23 2018.
+## This course has been delivered in GTPB, on February 19th - 23rd 2018.
+## and again for the IBB PhD programme of the IGC on February 26th - March 2nd 2018
+
+Course website: 
+[ELB18F](http://gtpb.igc.gulbenkian.pt/bicourses/2018/ELB18F/index.html) 
