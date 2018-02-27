@@ -6,7 +6,7 @@
 -----
 
 ## Instructors
-David P. Judge, Daniel Sobral & Pedro L. Fernandes
+David P. Judge, Daniel Sobral and Pedro L. Fernandes
 
 -----
 
