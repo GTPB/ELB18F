@@ -43,4 +43,10 @@ This course has been delivered in GTPB, on February 19th - 23rd 2018.
 and again for the IBB PhD programme of the IGC on February 26th - March 2nd 2018.
 
 Course website: 
+
 [ELB18F](http://gtpb.igc.gulbenkian.pt/bicourses/2018/ELB18F/index.html) 
+
+
+Zipped file with documentation:
+
+http://gtpb.igc.gulbenkian.pt/bicourses/2018/ELB18F/ELB18F_doc.zip
