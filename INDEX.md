@@ -25,9 +25,6 @@ Protein Structure Prediction | [Protein Structure Exercises](https://github.com/
 
 -----
 
-<a href="https://github.com/GTPB/ELB18F/blob/master/Presentations/06-Multiple_Sequence_Alignment.pdf" download target="_blank">Sequence Alignment Exercises</a>
-
-
 # Day 4 & Day 5
 
 ## Topics & Practicals
