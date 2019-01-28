@@ -1,11 +1,11 @@
 ---
 layout: page
-title: ELB18S 
-tagline: Entry Level Bioinformatics (Second Course in 2018)
+title: ELB18F
+tagline: Entry Level Bioinformatics (First Course in 2018)
 description: Entry level course with a soft introduction to NGS data analysis
 ---
 
-![](./pages/Images/ELB18S_entry.jpg)
+![](./pages/Images/Virtual_karyotype_karyogram.jpg)
 
 ## Course Description
 This is an **entry level** course aimed that those with a reasonable biological background but **no significant experience with bioinformatics**. The course is broadly based around a series of exercises in which a combination of simple analytical tools and reference to publicly available databases is applied to the investigation of a single human gene. The training manual for the course is comprised of detailed instructions for the tasks undertaken. Included are, questions (with answers) and discussion of and the interpretation of the results achieved.
@@ -23,7 +23,7 @@ This course is intended for those wishing to investigate how they might begin to
 
 **Note -** All the datasets used for this training course is available in the following button. You need to unzip this file and follow the instructions throughout the documentation.
 
-[**Download ELB18S Datasets**](https://github.com/GTPB/ELB18S/archive/data.zip){: .btn} <sub><i>File Size: 185,9MB</i></sub>
+[**Download ELB18S Datasets**](https://github.com/GTPB/ELB18F/archive/data.zip){: .btn} <sub><i>File Size: 185,9MB</i></sub>
 
 <br/>
 
@@ -138,4 +138,4 @@ This course is intended for those wishing to investigate how they might begin to
 ### [Instructors](pages/instructors.md)
 ---
 
-The source for this course webpage is [on github](https://github.com/GTPB/ELB18S).
+The source for this course webpage is [on github](https://github.com/GTPB/ELB18F).
