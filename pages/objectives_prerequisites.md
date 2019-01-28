@@ -23,4 +23,4 @@ Recommended Linux and basic Unix command line skills, such as navigating in a di
 
 ### Back
 
-Back to [first page](../index.md).
+Back to [main page](../index.md).
