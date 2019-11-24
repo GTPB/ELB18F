@@ -1,8 +1,5 @@
 ---
 layout: page
-title: ELB18F
-tagline: Entry Level Bioinformatics (First Course in 2018)
-description: Entry level course with a soft introduction to NGS data analysis
 schemadotorg:
   "@context": http://schema.org/
   "@type": CreativeWork
