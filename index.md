@@ -3,6 +3,46 @@ layout: page
 title: ELB18F
 tagline: Entry Level Bioinformatics (First Course in 2018)
 description: Entry level course with a soft introduction to NGS data analysis
+schemadotorg:
+  "@context": http://schema.org/
+  "@type": CreativeWork
+  "genre": TrainingMaterial
+
+  # Course details
+       # "name" -> The name of the course
+       # "description" -> Short description of the course
+  name: "ELB18F - Entry Level Bioinformatics (First Course in 2018)"
+  description: "Training material for entry level course in bioinformatics with a soft introduction to NGS data analysis."
+
+  # Keywords -> Consult EDAM:Topic
+  keywords:  ["http://edamontology.org/topic_0091", "http://edamontology.org/topic_3168"]
+
+  # Audience -> Following Elixir-Tess input
+  audience: ["Academia/ Research Institution", "Industry", "Non-Profit Organisation", "Healthcare"]
+
+  # Author info
+  author:
+    - "@type": Organization
+      name: "The Gulbenkian Training Programme in Bioinformatics"
+      alternateName: "GTPB"
+      sameAs: "gtpb.igc.gulbenkian.pt/bicourses/index.html"
+
+  # predominant type of learning resources
+  "learningResourceType": ["presentation", "exercise", "scripts", "handout"]
+
+  # Contributor info
+  contributor:
+    - "@type": Person
+      name: "David Judge"
+    - "@type": Person
+      name: "Daniel Sobral"
+    - "@type": Person
+      name: "Pedro Fernandes"
+
+  # License & Language & url
+  license: https://creativecommons.org/licenses/by/4.0/
+  inLanguage: "en-us"
+  url: "https://gtpb.github.io/ELB18F/"
 ---
 
 ![](./pages/Images/Virtual_karyotype_karyogram.jpg)
