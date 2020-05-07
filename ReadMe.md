@@ -1,4 +1,5 @@
 ## ELB18F - Entry level Bioinformatics (First course in 2018)
+[![DOI](https://zenodo.org/badge/122681643.svg)](https://zenodo.org/badge/latestdoi/122681643)
 
 ###  Instituto Gulbenkian de Ciência (IGC) - Oeiras, Portugal - February 19<sup>th</sup> - March 2<sup>nd</sup> 2018
 
